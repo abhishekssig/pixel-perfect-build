@@ -1,22 +1,35 @@
 
 
-## Section 1: Splash Screen – Shadow to Neon Reveal
+## Add Showcasing Product Section with Controller Images
 
 ### What will be built
-A full-screen splash screen with a pure black background, featuring the "R" logo centered on screen. The animation is a 4-stage shadow/glow manipulation sequence — no opacity tricks, no zoom, no rotation.
+A new "Showcasing Product" section below the hero, featuring two controller images (black and grey) displayed on a grey gradient platform shape, with shadow effects applied to the controllers.
 
-### Animation Sequence
-1. **Stage 1 – Heavy Shadow (0–0.8s):** Logo is present but buried under intense black drop-shadow. A very faint red glow barely hints at the logo's existence.
-2. **Stage 2 – Glow Amplification (0.8–1.6s):** Red outer glow intensifies gradually (20–40px blur). Shadow remains heavy. Logo starts emerging through the red neon energy. Eased with `ease-in`.
-3. **Stage 3 – Shadow Reduction / Main Reveal (1.6–2.2s):** Heavy black shadow smoothly reduces. Red neon glow stays active. Logo becomes fully visible — no movement, no scale, just shadow lift. Eased with `ease-out`.
-4. **Stage 4 – Final Polished State (2.2–3.7s):** Shadow resets to minimal. Subtle red neon glow remains alive. Logo is fully crisp. Brand name text fades in below over 0.5s, then holds for ~1.5s.
+### Assets to copy
+- `Untitled_design-18.png` (black controller) -> `src/assets/controller-black.png`
+- `Untitled_design-19.png` (grey controller) -> `src/assets/controller-grey.png`
+- `Rectangle_16.png` (grey gradient platform shape) -> `src/assets/platform-bg.png`
 
-### Assets
-- The uploaded "R" logo (`Frame_4.png`) will be copied into the project and used as the centered image.
+### Section layout
+- Full-width black background section
+- "Showcasing Product" heading top-left (large, light font)
+- Description paragraph below heading
+- Centered platform shape (the grey trapezoid gradient) with both controllers placed on top
+- Controllers get `drop-shadow` effects for depth (e.g. `drop-shadow(0 20px 40px rgba(0,0,0,0.6))`)
 
-### Implementation Details
-- Full-screen black background, nothing else on screen
-- CSS keyframes using only `filter: drop-shadow()` and `box-shadow` manipulation
-- No opacity flickering, no scale, no rotation, no particles, no extra effects
-- After the splash hold completes, it will transition to the main page content
+### Technical Details
+
+**New file:** `src/components/ShowcasingProduct.tsx`
+- Black background full-width section
+- Heading + description text aligned left
+- Platform image as background for the controller display area
+- Both controller images overlaid on platform with CSS drop-shadows
+- Controllers positioned side by side, slightly overlapping for depth
+
+**Modified file:** `src/pages/Index.tsx`
+- Import and render `ShowcasingProduct` below `HeroSection`
+
+**Shadow styling on controllers:**
+- `filter: drop-shadow(0 25px 50px rgba(0,0,0,0.5)) drop-shadow(0 10px 20px rgba(0,0,0,0.3))`
+- Gives a realistic floating/elevated look on the dark background
 

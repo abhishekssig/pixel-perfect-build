@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
-import logo from "@/assets/Frame_4.png";
+import logo from "@/assets/Frame_5.png";
 import mouseImg from "@/assets/mouse.png";
 import keyboardImg from "@/assets/keyboard-store.png";
 import gamepadImg from "@/assets/gamepad.png";
@@ -39,7 +39,7 @@ const Store = () => {
           alt="Rebel Head"
           className="w-10 h-10 cursor-pointer"
           onClick={() => navigate("/")}
-          style={{ filter: "brightness(0) invert(1) drop-shadow(0 0 6px rgba(255,0,0,0.3))" }}
+          style={{ filter: "drop-shadow(0 0 6px rgba(255,0,0,0.3))" }}
         />
         <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide">
           <span className="text-base">☰</span>

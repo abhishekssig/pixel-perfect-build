@@ -10,9 +10,9 @@ const HeroSection = () => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const vh = window.innerHeight;
-      if (scrollY > vh * 1.2) {
+      if (scrollY > vh * 0.6) {
         setStage(2);
-      } else if (scrollY > vh * 0.15) {
+      } else if (scrollY > vh * 0.1) {
         setStage(1);
       } else {
         setStage(0);
@@ -23,7 +23,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full h-[300vh]">
+    <section ref={sectionRef} className="relative w-full h-[180vh]">
       {/* Sticky hero container */}
       <div className="sticky top-0 w-full h-screen overflow-hidden bg-black">
         {/* Video background */}

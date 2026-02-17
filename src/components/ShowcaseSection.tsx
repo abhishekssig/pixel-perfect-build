@@ -1,6 +1,11 @@
 const ShowcaseSection = () => {
   return (
-    <section className="relative z-10 bg-black rounded-t-3xl min-h-screen px-6 md:px-16 lg:px-24 pt-16 md:pt-24 -mt-[1px]">
+    <section
+      className="relative z-20 bg-black rounded-t-[2rem] min-h-screen px-6 md:px-16 lg:px-24 pt-16 md:pt-24 -mt-[100vh]"
+      style={{
+        boxShadow: "0 -30px 80px rgba(0,0,0,0.8)",
+      }}
+    >
       <h2 className="text-white text-3xl md:text-5xl font-light leading-tight">
         Showcasing Product
       </h2>

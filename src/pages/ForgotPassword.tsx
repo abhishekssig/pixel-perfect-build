@@ -48,7 +48,7 @@ const ForgotPassword = () => {
             />
           </div>
 
-          <button className="mt-8 w-full py-3 rounded-full border border-white/30 text-white text-sm tracking-wider hover:bg-white/10 transition-colors">
+          <button onClick={() => navigate("/verify-otp")} className="mt-8 w-full py-3 rounded-full border border-white/30 text-white text-sm tracking-wider hover:bg-white/10 transition-colors">
             Get OTP
           </button>
         </div>

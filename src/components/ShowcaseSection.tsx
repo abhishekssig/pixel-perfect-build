@@ -47,7 +47,7 @@ const ShowcaseSection = () => {
       ref={sectionRef}
       className="relative z-20 bg-black rounded-t-[2rem] -mt-[100vh]"
       style={{
-        boxShadow: "0 -30px 80px rgba(0,0,0,0.8)",
+        boxShadow: "0 -40px 100px rgba(0,0,0,0.95)",
         minHeight: "250vh",
       }}
     >
@@ -72,7 +72,7 @@ const ShowcaseSection = () => {
             width: `${boxWidth}%`,
             height: `${boxHeight}vh`,
             borderRadius: `${boxRadius}px`,
-            background: "linear-gradient(180deg, #b0b0b0 0%, #d0d0d0 40%, #e0e0e0 70%, #a0a0a0 100%)",
+            background: "linear-gradient(180deg, #909090 0%, #b0b0b0 40%, #c0c0c0 70%, #808080 100%)",
             transform: `translateY(${imageTranslateY * 0.3}px)`,
             opacity: imageOpacity,
             transition: "width 0.05s linear, height 0.05s linear, border-radius 0.05s linear, opacity 0.1s linear",
@@ -94,11 +94,11 @@ const ShowcaseSection = () => {
             {/* Top nav */}
             <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-6 md:px-10 py-5">
               <div />
-              <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm text-white text-sm tracking-wide">
+              <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-black/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide">
                 <span className="text-base">☰</span>
                 <span>MENU</span>
               </button>
-              <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm text-white text-sm tracking-wide">
+              <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-black/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide">
                 <span className="text-base">👤</span>
                 <span>Account</span>
               </button>

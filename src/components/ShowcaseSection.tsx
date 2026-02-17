@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import controllerBlack from "@/assets/controller-black.png";
 import controllerWhite from "@/assets/controller-white.png";
 import controllerBlackAlt from "@/assets/controller-black-alt.png";
 
 const ShowcaseSection = () => {
+  const navigate = useNavigate();
   const sectionRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [expandProgress, setExpandProgress] = useState(0);
@@ -142,7 +144,7 @@ const ShowcaseSection = () => {
                 <span className="text-base">☰</span>
                 <span>MENU</span>
               </button>
-              <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-black/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide">
+              <button onClick={() => navigate("/signup")} className="flex items-center gap-2 px-4 py-2 rounded-full border border-black/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide">
                 <span className="text-base">👤</span>
                 <span>Account</span>
               </button>

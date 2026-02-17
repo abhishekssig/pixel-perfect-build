@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import controllerBlack from "@/assets/controller-black.png";
 import controllerWhite from "@/assets/controller-white.png";
+import controllerBlackAlt from "@/assets/controller-black-alt.png";
+import keyboardImg from "@/assets/keyboard.png";
 
 const ShowcaseSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [expandProgress, setExpandProgress] = useState(0);
+  const [shrinkProgress, setShrinkProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,10 +21,16 @@ const ShowcaseSection = () => {
       setScrollProgress(progress);
 
       const scrolledInto = vh - rect.top;
-      const expandStart = sectionH * 0.3;
-      const expandEnd = sectionH * 0.75;
+      const expandStart = sectionH * 0.15;
+      const expandEnd = sectionH * 0.45;
       const ep = Math.min(Math.max((scrolledInto - expandStart) / (expandEnd - expandStart), 0), 1);
       setExpandProgress(ep);
+
+      // Shrink phase starts after expand completes
+      const shrinkStart = sectionH * 0.55;
+      const shrinkEnd = sectionH * 0.8;
+      const sp = Math.min(Math.max((scrolledInto - shrinkStart) / (shrinkEnd - shrinkStart), 0), 1);
+      setShrinkProgress(sp);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
@@ -32,16 +41,37 @@ const ShowcaseSection = () => {
   const imageOpacity = Math.min(scrollProgress * 1.5, 1);
   const textFade = Math.max(0, 1 - expandProgress * 3);
 
-  // Box expansion
+  // Phase 1: Box expansion (dual controllers)
   const boxWidth = 50 + expandProgress * 50;
   const boxHeight = 40 + expandProgress * 60;
   const boxRadius = Math.max(0, 24 * (1 - expandProgress));
 
-  // Single controller fades out, dual controllers fade in
   const singleControllerOpacity = expandProgress > 0.6 ? Math.max(0, 1 - (expandProgress - 0.6) * 5) : 1;
   const gyroContentOpacity = expandProgress > 0.7 ? Math.min((expandProgress - 0.7) * 3.3, 1) : 0;
   const gyroControllerY = expandProgress > 0.7 ? Math.max(0, (1 - (expandProgress - 0.7) * 3.3) * 200) : 200;
   const gyroScale = expandProgress > 0.7 ? 0.7 + Math.min((expandProgress - 0.7) * 3.3, 1) * 0.3 : 0.7;
+
+  // Phase 2: Shrink - box gets smaller, white controller fades, keyboard box appears
+  const shrinkBoxWidth = shrinkProgress > 0 ? Math.max(40, 100 - shrinkProgress * 60) : boxWidth;
+  const shrinkBoxHeight = shrinkProgress > 0 ? Math.max(30, 100 - shrinkProgress * 70) : boxHeight;
+  const shrinkBoxRadius = shrinkProgress > 0 ? shrinkProgress * 16 : boxRadius;
+
+  // White controller slides under black during shrink
+  const whiteControllerOpacity = shrinkProgress > 0 ? Math.max(0, 1 - shrinkProgress * 2.5) : 1;
+  // Dual controllers shrink phase - white moves toward black
+  const whiteControllerX = shrinkProgress > 0 ? shrinkProgress * 120 : 0;
+
+  // Gyro content (nav, text, CTA) fades out during shrink
+  const gyroOverlayOpacity = shrinkProgress > 0 ? Math.max(0, 1 - shrinkProgress * 3) : 1;
+
+  // Keyboard box appears
+  const keyboardBoxOpacity = shrinkProgress > 0.3 ? Math.min((shrinkProgress - 0.3) * 2, 1) : 0;
+  const keyboardBoxY = shrinkProgress > 0.3 ? Math.max(0, (1 - (shrinkProgress - 0.3) * 2) * 80) : 80;
+
+  // Final box values
+  const finalBoxWidth = shrinkProgress > 0 ? shrinkBoxWidth : boxWidth;
+  const finalBoxHeight = shrinkProgress > 0 ? shrinkBoxHeight : boxHeight;
+  const finalBoxRadius = shrinkProgress > 0 ? shrinkBoxRadius : boxRadius;
 
   return (
     <section
@@ -49,7 +79,7 @@ const ShowcaseSection = () => {
       className="relative z-20 bg-black rounded-t-[2rem] -mt-[100vh]"
       style={{
         boxShadow: "0 -40px 100px rgba(0,0,0,0.95)",
-        minHeight: "250vh",
+        minHeight: "400vh",
       }}
     >
       {/* Text content */}
@@ -65,21 +95,22 @@ const ShowcaseSection = () => {
         </p>
       </div>
 
-      {/* Expanding box */}
-      <div className="sticky top-0 h-screen flex items-center justify-center mt-8">
+      {/* Sticky container for both boxes */}
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center mt-8 gap-6">
+        {/* Main expanding/shrinking box */}
         <div
           className="relative flex items-center justify-center overflow-hidden"
           style={{
-            width: `${boxWidth}%`,
-            height: `${boxHeight}vh`,
-            borderRadius: `${boxRadius}px`,
+            width: `${finalBoxWidth}%`,
+            height: `${finalBoxHeight}vh`,
+            borderRadius: `${finalBoxRadius}px`,
             background: "linear-gradient(180deg, #909090 0%, #b0b0b0 40%, #c0c0c0 70%, #808080 100%)",
             transform: `translateY(${imageTranslateY * 0.3}px)`,
             opacity: imageOpacity,
             transition: "width 0.05s linear, height 0.05s linear, border-radius 0.05s linear, opacity 0.1s linear",
           }}
         >
-          {/* Single controller - fades out */}
+          {/* Single controller - initial phase */}
           <img
             src={controllerBlack}
             alt="Gaming Controller"
@@ -87,13 +118,16 @@ const ShowcaseSection = () => {
             style={{ opacity: singleControllerOpacity }}
           />
 
-          {/* Gyro content - fades in as box fully expands */}
+          {/* Gyro content - fades in during expand, fades out during shrink */}
           <div
             className="absolute inset-0 flex flex-col items-center justify-center z-20"
             style={{ opacity: gyroContentOpacity }}
           >
-            {/* Top nav */}
-            <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-6 md:px-10 py-5">
+            {/* Top nav - fades out during shrink */}
+            <div
+              className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-6 md:px-10 py-5"
+              style={{ opacity: gyroOverlayOpacity }}
+            >
               <div />
               <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-black/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide">
                 <span className="text-base">☰</span>
@@ -105,7 +139,7 @@ const ShowcaseSection = () => {
               </button>
             </div>
 
-            {/* Dual controllers */}
+            {/* Dual controllers - white fades/moves during shrink */}
             <div
               className="relative w-full max-w-4xl flex items-center justify-center gap-8 md:gap-16 px-8"
               style={{
@@ -117,21 +151,29 @@ const ShowcaseSection = () => {
                 src={controllerWhite}
                 alt="White Controller"
                 className="w-[42%] md:w-[380px]"
-                style={{ transform: "rotate(-8deg)", filter: "drop-shadow(0 25px 35px rgba(0,0,0,0.6))" }}
+                style={{
+                  transform: `rotate(-8deg) translateX(${whiteControllerX}px)`,
+                  filter: "drop-shadow(0 25px 35px rgba(0,0,0,0.6))",
+                  opacity: whiteControllerOpacity,
+                  transition: "opacity 0.05s linear, transform 0.05s linear",
+                }}
               />
               <img
-                src={controllerBlack}
+                src={controllerBlackAlt}
                 alt="Black Controller"
                 className="w-[42%] md:w-[380px]"
-                style={{ transform: "rotate(5deg)", filter: "drop-shadow(0 25px 35px rgba(0,0,0,0.6))" }}
+                style={{
+                  transform: "rotate(5deg)",
+                  filter: "drop-shadow(0 25px 35px rgba(0,0,0,0.6))",
+                }}
               />
             </div>
 
-            {/* Reflections */}
+            {/* Reflections - fade out during shrink */}
             <div
               className="relative w-full max-w-4xl flex items-start justify-center gap-8 md:gap-16 px-8 -mt-4"
               style={{
-                opacity: 0.3,
+                opacity: 0.3 * (shrinkProgress > 0 ? Math.max(0, 1 - shrinkProgress * 2) : 1),
                 transform: "scaleY(-1)",
                 filter: "blur(6px)",
                 maskImage: "linear-gradient(to bottom, rgba(0,0,0,0.4), transparent)",
@@ -142,8 +184,11 @@ const ShowcaseSection = () => {
               <img src={controllerBlack} alt="" className="w-[42%] md:w-[380px]" style={{ transform: "rotate(5deg)" }} />
             </div>
 
-            {/* Bottom text + CTA */}
-            <div className="absolute bottom-12 left-6 md:left-10 right-6 md:right-10 z-10 flex items-end justify-between">
+            {/* Bottom text + CTA - fades out during shrink */}
+            <div
+              className="absolute bottom-12 left-6 md:left-10 right-6 md:right-10 z-10 flex items-end justify-between"
+              style={{ opacity: gyroOverlayOpacity }}
+            >
               <div className="max-w-lg">
                 <h2 className="text-white text-2xl md:text-4xl lg:text-5xl font-light leading-tight">
                   Gamepad with Gyro Sensor
@@ -160,6 +205,29 @@ const ShowcaseSection = () => {
               </button>
             </div>
           </div>
+        </div>
+
+        {/* Keyboard box - appears during shrink phase */}
+        <div
+          className="relative overflow-hidden"
+          style={{
+            width: `${finalBoxWidth}%`,
+            height: "30vh",
+            borderRadius: "16px",
+            background: "linear-gradient(180deg, #909090 0%, #b0b0b0 40%, #c0c0c0 70%, #808080 100%)",
+            opacity: keyboardBoxOpacity,
+            transform: `translateY(${keyboardBoxY}px)`,
+            transition: "opacity 0.05s linear, transform 0.05s linear, width 0.05s linear",
+          }}
+        >
+          <img
+            src={keyboardImg}
+            alt="Mechanical Keyboard"
+            className="absolute bottom-0 right-0 w-[60%] max-w-[500px] h-auto"
+            style={{
+              filter: "drop-shadow(0 -10px 30px rgba(0,0,0,0.5))",
+            }}
+          />
         </div>
       </div>
     </section>

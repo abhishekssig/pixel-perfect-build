@@ -7,8 +7,8 @@ const KeyboardSection = () => {
         <div
           className="relative overflow-hidden rounded-3xl"
           style={{
-            width: "55%",
-            height: "50vh",
+            width: "45%",
+            height: "40vh",
             background:
               "linear-gradient(180deg, #909090 0%, #b0b0b0 40%, #c0c0c0 70%, #808080 100%)",
           }}

@@ -5,6 +5,7 @@ const KeyboardSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [expandProgress, setExpandProgress] = useState(0);
   const [slideProgress, setSlideProgress] = useState(0);
+  const [shrinkProgress, setShrinkProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,39 +17,53 @@ const KeyboardSection = () => {
 
       // Phase 1: Box expands to fullscreen
       const expandStart = sectionH * 0.05;
-      const expandEnd = sectionH * 0.3;
+      const expandEnd = sectionH * 0.25;
       const ep = Math.min(Math.max((scrolledInto - expandStart) / (expandEnd - expandStart), 0), 1);
       setExpandProgress(ep);
 
-      // Phase 2: Keyboard slides from left to right
-      const slideStart = sectionH * 0.3;
-      const slideEnd = sectionH * 0.7;
+      // Phase 2: Keyboard slides from right to left
+      const slideStart = sectionH * 0.25;
+      const slideEnd = sectionH * 0.5;
       const sp = Math.min(Math.max((scrolledInto - slideStart) / (slideEnd - slideStart), 0), 1);
       setSlideProgress(sp);
+
+      // Phase 3: Box shrinks back down
+      const shrinkStart = sectionH * 0.6;
+      const shrinkEnd = sectionH * 0.8;
+      const skp = Math.min(Math.max((scrolledInto - shrinkStart) / (shrinkEnd - shrinkStart), 0), 1);
+      setShrinkProgress(skp);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Box expansion
+  // Phase 1: Box expansion
   const boxWidth = 45 + expandProgress * 55;
   const boxHeight = 40 + expandProgress * 60;
   const boxRadius = Math.max(0, 24 * (1 - expandProgress));
 
-  const finalW = boxWidth > 85 ? 100 : boxWidth;
-  const finalH = boxHeight > 85 ? 100 : boxHeight;
-  const finalR = (finalW >= 100 && finalH >= 100) ? 0 : boxRadius;
+  // Phase 3: Shrink
+  const shrinkW = shrinkProgress > 0 ? 100 - shrinkProgress * 55 : boxWidth;
+  const shrinkH = shrinkProgress > 0 ? 100 - shrinkProgress * 65 : boxHeight;
+  const shrinkR = shrinkProgress > 0 ? shrinkProgress * 20 : boxRadius;
+  const overlayFade = shrinkProgress > 0 ? Math.max(0, 1 - shrinkProgress * 3) : 1;
 
-  // Keyboard lateral slide: starts left (-60%) slides to right (60%)
+  const rawW = shrinkProgress > 0 ? shrinkW : boxWidth;
+  const rawH = shrinkProgress > 0 ? shrinkH : boxHeight;
+  const finalW = rawW > 85 ? 100 : rawW;
+  const finalH = rawH > 85 ? 100 : rawH;
+  const finalR = (finalW >= 100 && finalH >= 100) ? 0 : (shrinkProgress > 0 ? shrinkR : boxRadius);
+
+  // Keyboard lateral slide: starts right (60%) slides to left (-60%)
   const kbX = 60 - slideProgress * 120;
-  const overlayOpacity = expandProgress > 0.7 ? Math.min((expandProgress - 0.7) * 3.3, 1) : 0;
+  const overlayOpacity = (expandProgress > 0.7 ? Math.min((expandProgress - 0.7) * 3.3, 1) : 0) * overlayFade;
 
   return (
     <section
       ref={sectionRef}
       className="relative z-20 bg-black"
-      style={{ minHeight: "350vh" }}
+      style={{ minHeight: "450vh" }}
     >
       {/* Sticky container */}
       <div className="sticky top-0 h-screen overflow-hidden">
@@ -65,7 +80,7 @@ const KeyboardSection = () => {
             zIndex: 2,
           }}
         >
-          {/* Keyboard image - huge, slides left to right */}
+          {/* Keyboard image - huge, slides right to left */}
           <img
             src={keyboardDark}
             alt="Mechanical Keyboard"

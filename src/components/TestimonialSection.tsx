@@ -1,78 +1,99 @@
+import { useRef } from "react";
 import katanaImg from "@/assets/katana.png";
 
 const testimonials = [
   {
     name: "Amelia Li",
+    company: "Quantum Ware",
     role: "Co-Founder & CEO",
     avatar: "https://i.pravatar.cc/80?img=1",
     quote:
-      "Working with the team at Root Developer Solutions has been an absolute pleasure! Their team of developers is incredibly skilled and experienced. They took our requirements and turned them into a cutting-edge software solution that has revolutionized our internal processes.",
+      "Working with the team at Root Development Solutions has been an absolute pleasure! Their team of developers is incredibly skilled and responsive.",
   },
   {
     name: "Ethan Anderson",
+    company: "Nexus Labs",
     role: "Operations Manager",
     avatar: "https://i.pravatar.cc/80?img=3",
     quote:
-      "Working with the team at Root Developer Solutions has been an absolute pleasure! Their team of developers is incredibly skilled and experienced.",
+      "Working with the team at Root Development Solutions has been an absolute pleasure! Their team of developers is incredibly skilled and experienced.",
   },
   {
     name: "Natasha Hiren",
+    company: "Velocity Inc",
     role: "Product Designer",
     avatar: "https://i.pravatar.cc/80?img=5",
     quote:
-      "Working with the team at Root Developer Solutions has been an absolute pleasure! Their team of developers is incredibly skilled and experienced. They took our requirements and turned them into a cutting-edge software solution.",
+      "Working with the team at Root Development Solutions has been an absolute pleasure! Their team of developers is incredibly skilled and experienced. They took our requirements and turned them into a cutting-edge software solution.",
   },
   {
     name: "Aria Rodriguez",
+    company: "Orbit Systems",
     role: "Lead Developer",
     avatar: "https://i.pravatar.cc/80?img=9",
     quote:
-      "Working with the team at Root Developer Solutions has been an absolute pleasure! Their team of developers is incredibly skilled and experienced. They turned them into a cutting-edge software solution that has revolutionized our internal processes and experience.",
+      "Working with the team at Root Development Solutions has been an absolute pleasure! Their team of developers is incredibly skilled and experienced. They turned them into a cutting-edge software solution that has revolutionized our internal processes.",
   },
 ];
 
 const TestimonialSection = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   return (
-    <section className="relative z-20 bg-black min-h-screen py-24 px-6 md:px-16 lg:px-24 overflow-hidden">
-      {/* Katana image - left side */}
-      <div className="absolute left-0 bottom-0 w-[300px] md:w-[400px] lg:w-[500px] z-0 pointer-events-none">
+    <section className="relative z-20 bg-black min-h-screen flex items-center overflow-hidden">
+      {/* Left side - Katana image (static) */}
+      <div className="hidden md:flex w-[45%] h-screen items-center justify-center relative flex-shrink-0">
         <img
           src={katanaImg}
           alt="Katana"
-          className="w-full h-auto object-contain opacity-80"
-          style={{
-            transform: "rotate(-15deg) translate(-20%, 10%)",
-          }}
+          className="h-[85%] w-auto object-contain"
+          style={{ transform: "rotate(-15deg) translateX(-5%)" }}
         />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto">
-        {/* Testimonial grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+      {/* Right side - Scrollable testimonials */}
+      <div className="flex-1 relative h-screen flex flex-col justify-center py-16 px-6 md:px-0 md:pr-12">
+        {/* Top gradient fade */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent z-10 pointer-events-none" />
+        {/* Bottom gradient fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent z-10 pointer-events-none" />
+
+        <div
+          ref={scrollRef}
+          className="overflow-y-auto h-[70vh] space-y-6 pr-4 scrollbar-hide"
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-4"
+              className="rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm p-8 flex flex-col gap-5"
             >
               {/* Header */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 <img
                   src={t.avatar}
                   alt={t.name}
-                  className="w-10 h-10 rounded-full object-cover"
+                  className="w-14 h-14 rounded-full object-cover border-2 border-white/20"
                 />
                 <div>
-                  <p className="text-white text-sm font-medium">{t.name}</p>
-                  <p className="text-white/50 text-xs">{t.role}</p>
+                  <p className="text-red-400 text-xs font-medium tracking-wider uppercase">
+                    {t.company}
+                  </p>
+                  <p className="text-white text-base font-semibold">{t.name}</p>
+                  <p className="text-white/40 text-sm">{t.role}</p>
                 </div>
               </div>
               {/* Quote */}
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white/60 text-base leading-relaxed">
                 "{t.quote}"
               </p>
             </div>
           ))}
+          {/* Spacer for bottom gradient */}
+          <div className="h-16" />
         </div>
       </div>
     </section>

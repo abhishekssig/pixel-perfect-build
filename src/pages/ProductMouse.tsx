@@ -3,20 +3,35 @@ import { useNavigate } from "react-router-dom";
 import logo from "@/assets/Frame_5.png";
 import mouseHero from "@/assets/mouse-hero.png";
 
+const VARIANTS = [
+  { id: 1, color: "#1a1a1a" },
+  { id: 2, color: "#2a2a2a" },
+  { id: 3, color: "#333333" },
+  { id: 4, color: "#3a3a3a" },
+  { id: 5, color: "#444444" },
+  { id: 6, color: "#4a4a4a" },
+];
+
 const ProductMouse = () => {
   const navigate = useNavigate();
-  const [showDesc, setShowDesc] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [selectedVariant, setSelectedVariant] = useState(1);
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowDesc(window.scrollY > window.innerHeight * 0.15);
+      const ratio = window.scrollY / (window.innerHeight * 0.5);
+      setScrollProgress(Math.min(ratio, 1));
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const showDesc = scrollProgress > 0.3;
+  const showVariants = scrollProgress > 0.5;
+  const showPrice = scrollProgress > 0.7;
+
   return (
-    <div className="min-h-[200vh] bg-[#1a1a1a] text-white">
+    <div className="min-h-[250vh] bg-[#1a1a1a] text-white">
       {/* Top Nav */}
       <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-4">
         <img
@@ -45,10 +60,12 @@ const ProductMouse = () => {
       {/* Hero Section - sticky */}
       <div className="sticky top-0 h-screen px-6 md:px-10 flex flex-col md:flex-row items-center pt-20 relative">
         {/* Left Content */}
-        <div className="flex-1 z-10 pt-10 md:pt-0">
+        <div className="flex-1 z-10 pt-10 md:pt-0 flex flex-col justify-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-light leading-tight mb-6">
             Rebel head Pro click<br />R2
           </h1>
+
+          {/* Description - scroll reveal */}
           <div
             className="transition-all duration-700 ease-out"
             style={{
@@ -60,6 +77,47 @@ const ProductMouse = () => {
             <p className="text-white/70 text-sm md:text-base max-w-sm leading-relaxed">
               A haptic feedback mouse featuring personalized body printing for enhanced tactile response and ergonomic user experience.
             </p>
+          </div>
+
+          {/* Variant selector - scroll reveal */}
+          <div
+            className="mt-6 transition-all duration-700 ease-out"
+            style={{
+              opacity: showVariants ? 1 : 0,
+              transform: showVariants ? "translateY(0)" : "translateY(20px)",
+            }}
+          >
+            <p className="text-red-500/80 text-xs uppercase tracking-widest mb-3">Select Variant</p>
+            <div className="flex gap-3">
+              {VARIANTS.map((v) => (
+                <button
+                  key={v.id}
+                  onClick={() => setSelectedVariant(v.id)}
+                  className={`w-10 h-10 rounded-md border-2 transition-all ${
+                    selectedVariant === v.id
+                      ? "border-red-500 scale-110"
+                      : "border-white/10 hover:border-white/30"
+                  }`}
+                  style={{ backgroundColor: v.color }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Price + Add to Cart - scroll reveal */}
+          <div
+            className="mt-6 transition-all duration-700 ease-out"
+            style={{
+              opacity: showPrice ? 1 : 0,
+              transform: showPrice ? "translateY(0)" : "translateY(20px)",
+            }}
+          >
+            <p className="text-red-500/80 text-xs uppercase tracking-widest mb-1">In Stock</p>
+            <p className="text-2xl md:text-3xl font-light mb-4">INR 3500.93</p>
+            <button className="flex items-center gap-3 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-white text-sm tracking-wide hover:bg-white/10 transition-colors">
+              <span>Add to Cart</span>
+              <span className="text-lg">🛒</span>
+            </button>
           </div>
         </div>
 
@@ -75,8 +133,14 @@ const ProductMouse = () => {
         {/* Progress Bar */}
         <div className="absolute bottom-12 left-0 right-0 flex justify-center">
           <div className="flex items-center gap-1 w-[200px]">
-            <div className="h-[3px] flex-1 bg-red-500 rounded-full" />
-            <div className="h-[3px] flex-[2] bg-white/20 rounded-full" />
+            <div
+              className="h-[3px] bg-red-500 rounded-full transition-all duration-300"
+              style={{ flex: Math.max(0.2, scrollProgress) }}
+            />
+            <div
+              className="h-[3px] bg-white/20 rounded-full transition-all duration-300"
+              style={{ flex: Math.max(0.1, 1 - scrollProgress) }}
+            />
           </div>
         </div>
       </div>

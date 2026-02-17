@@ -28,7 +28,7 @@ const footerLinks = [
 
 const FooterSection = () => {
   return (
-    <footer className="relative z-30 -mt-[100vh] pt-[50vh] bg-transparent">
+    <footer className="relative z-30 -mt-48 bg-transparent">
       <div className="rounded-t-3xl bg-white/5 backdrop-blur-xl border-t border-white/10 overflow-hidden">
       {/* Social links bar */}
       <div className="grid grid-cols-2 md:grid-cols-4 border-t border-white/10">

@@ -22,7 +22,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full min-h-[300vh]">
+    <section ref={sectionRef} className="relative w-full h-[300vh]">
       {/* Sticky hero container */}
       <div className="sticky top-0 w-full h-screen overflow-hidden bg-black">
         {/* Video background */}
@@ -98,16 +98,6 @@ const HeroSection = () => {
             <span className="absolute bottom-2 right-2 text-white/50 text-xs">↗</span>
           </button>
         </div>
-      </div>
-
-      {/* Black drawer that scrolls up over the hero */}
-      <div className="relative z-20 bg-black rounded-t-3xl -mt-[50vh] min-h-screen px-6 md:px-16 lg:px-24 pt-16 md:pt-24">
-        <h2 className="text-white text-3xl md:text-5xl font-light leading-tight">
-          Showcasing Product
-        </h2>
-        <p className="text-white/60 text-sm md:text-base mt-4 max-w-2xl leading-relaxed">
-          Discover the standout features and design of our latest innovation. We're showcasing a product that blends performance, style, and smart functionality.
-        </p>
       </div>
     </section>
   );

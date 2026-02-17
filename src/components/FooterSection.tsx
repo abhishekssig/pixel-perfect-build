@@ -45,10 +45,10 @@ const FooterSection = () => {
       </div>
 
       {/* Footer links grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 px-6 md:px-12 py-12 border-t border-white/10">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 px-6 md:px-12 py-16 pb-20 border-t border-white/10">
         {footerLinks.map((col) => (
-          <div key={col.title} className="flex flex-col gap-3">
-            <p className="text-white/30 text-xs font-medium tracking-wider uppercase mb-1">
+          <div key={col.title} className="flex flex-col gap-4">
+            <p className="text-white/30 text-xs font-medium tracking-wider uppercase mb-2">
               {col.title}
             </p>
             {col.links.map((link) => (

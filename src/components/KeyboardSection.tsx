@@ -19,7 +19,7 @@ const KeyboardSection = () => {
             alt="Mechanical Keyboard"
             className="absolute"
             style={{
-              width: "200%",
+              width: "700%",
               bottom: "-40%",
               right: "-25%",
               objectFit: "contain",

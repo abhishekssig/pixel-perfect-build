@@ -4,6 +4,7 @@ import keyboardDark from "@/assets/keyboard-dark.png";
 const KeyboardSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [expandProgress, setExpandProgress] = useState(0);
+  const [slideProgress, setSlideProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,10 +14,17 @@ const KeyboardSection = () => {
       const sectionH = sectionRef.current.offsetHeight;
       const scrolledInto = vh - rect.top;
 
-      const expandStart = sectionH * 0.08;
-      const expandEnd = sectionH * 0.35;
+      // Phase 1: Box expands to fullscreen
+      const expandStart = sectionH * 0.05;
+      const expandEnd = sectionH * 0.3;
       const ep = Math.min(Math.max((scrolledInto - expandStart) / (expandEnd - expandStart), 0), 1);
       setExpandProgress(ep);
+
+      // Phase 2: Keyboard slides from left to right
+      const slideStart = sectionH * 0.3;
+      const slideEnd = sectionH * 0.7;
+      const sp = Math.min(Math.max((scrolledInto - slideStart) / (slideEnd - slideStart), 0), 1);
+      setSlideProgress(sp);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
@@ -32,20 +40,20 @@ const KeyboardSection = () => {
   const finalH = boxHeight > 85 ? 100 : boxHeight;
   const finalR = (finalW >= 100 && finalH >= 100) ? 0 : boxRadius;
 
-  // Keyboard image grows as box expands
-  const kbWidth = 85 + expandProgress * 115; // 85% -> 200%
+  // Keyboard lateral slide: starts left (-60%) slides to right (60%)
+  const kbX = -60 + slideProgress * 120;
   const overlayOpacity = expandProgress > 0.7 ? Math.min((expandProgress - 0.7) * 3.3, 1) : 0;
 
   return (
     <section
       ref={sectionRef}
       className="relative z-20 bg-black"
-      style={{ minHeight: "250vh" }}
+      style={{ minHeight: "350vh" }}
     >
       {/* Sticky container */}
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
+      <div className="sticky top-0 h-screen overflow-hidden">
         <div
-          className="absolute flex items-center justify-center overflow-hidden"
+          className="absolute overflow-hidden"
           style={{
             left: `${(100 - finalW) / 2}%`,
             right: `${(100 - finalW) / 2}%`,
@@ -54,24 +62,25 @@ const KeyboardSection = () => {
             borderRadius: `${finalR}px`,
             background:
               "linear-gradient(180deg, #909090 0%, #b0b0b0 40%, #c0c0c0 70%, #808080 100%)",
-            transition: "opacity 0.1s linear",
             zIndex: 2,
           }}
         >
-          {/* Keyboard image */}
+          {/* Keyboard image - huge, slides left to right */}
           <img
             src={keyboardDark}
             alt="Mechanical Keyboard"
             className="absolute"
             style={{
-              width: `${kbWidth}%`,
-              bottom: "-30%",
-              right: "-20%",
+              height: "110%",
+              width: "auto",
+              top: "5%",
+              left: `${kbX}%`,
               objectFit: "contain",
+              transition: "left 0.05s linear",
             }}
           />
 
-          {/* Nav overlay - appears when expanded */}
+          {/* Nav overlay */}
           <div
             className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-6 md:px-10 py-5"
             style={{ opacity: overlayOpacity }}
@@ -87,7 +96,7 @@ const KeyboardSection = () => {
             </button>
           </div>
 
-          {/* Bottom text + CTA - appears when expanded */}
+          {/* Bottom text + CTA */}
           <div
             className="absolute bottom-12 left-6 md:left-10 right-6 md:right-10 z-10 flex items-end justify-between"
             style={{ opacity: overlayOpacity }}

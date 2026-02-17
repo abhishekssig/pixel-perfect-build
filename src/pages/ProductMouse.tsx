@@ -64,7 +64,9 @@ const ProductMouse = () => {
         </div>
       </div>
 
-      <FooterSection />
+      <div className="mt-16">
+        <FooterSection />
+      </div>
     </div>
   );
 };

@@ -37,7 +37,7 @@ const Store = () => {
         <img
           src={logo}
           alt="Rebel Head"
-          className="w-10 h-10 cursor-pointer"
+          className="h-10 w-auto cursor-pointer"
           onClick={() => navigate("/")}
           style={{ filter: "drop-shadow(0 0 6px rgba(255,0,0,0.3))" }}
         />

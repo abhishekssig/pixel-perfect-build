@@ -95,7 +95,7 @@ const Login = () => {
             ))}
           </div>
 
-          <p className="text-white/30 text-sm text-center mt-8">Having Issues With Your Password?</p>
+          <button onClick={() => navigate("/forgot-password")} className="text-white/30 text-sm text-center mt-8 hover:text-white/60 transition-colors w-full">Having Issues With Your Password?</button>
         </div>
       </div>
     </div>

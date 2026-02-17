@@ -20,23 +20,22 @@ const ShowcaseSection = () => {
       const sectionH = sectionRef.current.offsetHeight;
       const scrolledInto = vh - rect.top;
 
-      // Initial entrance
       const progress = Math.min(Math.max((vh - rect.top) / vh, 0), 1);
       setScrollProgress(progress);
 
-      // Phase 1: Box expands, dual controllers appear
+      // Phase 1: Box expands to fullscreen
       const expandStart = sectionH * 0.08;
       const expandEnd = sectionH * 0.28;
       const ep = Math.min(Math.max((scrolledInto - expandStart) / (expandEnd - expandStart), 0), 1);
       setExpandProgress(ep);
 
-      // Phase 2: Box shrinks, controllers merge
+      // Phase 2: Box shrinks
       const shrinkStart = sectionH * 0.35;
       const shrinkEnd = sectionH * 0.52;
       const sp = Math.min(Math.max((scrolledInto - shrinkStart) / (shrinkEnd - shrinkStart), 0), 1);
       setShrinkProgress(sp);
 
-      // Phase 3: Keyboard box expands to fullscreen
+      // Phase 3: Keyboard box expands
       const kbStart = sectionH * 0.55;
       const kbEnd = sectionH * 0.75;
       const kp = Math.min(Math.max((scrolledInto - kbStart) / (kbEnd - kbStart), 0), 1);
@@ -51,7 +50,7 @@ const ShowcaseSection = () => {
   const imageOpacity = Math.min(scrollProgress * 1.5, 1);
   const textFade = Math.max(0, 1 - expandProgress * 3);
 
-  // Phase 1: Box expansion
+  // Phase 1: Box expansion - goes to TRUE fullscreen
   const boxWidth = 50 + expandProgress * 50;
   const boxHeight = 40 + expandProgress * 60;
   const boxRadius = Math.max(0, 24 * (1 - expandProgress));
@@ -62,6 +61,7 @@ const ShowcaseSection = () => {
   const gyroScale = expandProgress > 0.7 ? 0.7 + Math.min((expandProgress - 0.7) * 3.3, 1) * 0.3 : 0.7;
 
   // Phase 2: Shrink
+  const isFullscreen = expandProgress >= 1 && shrinkProgress === 0;
   const shrinkW = shrinkProgress > 0 ? 100 - shrinkProgress * 55 : boxWidth;
   const shrinkH = shrinkProgress > 0 ? 100 - shrinkProgress * 65 : boxHeight;
   const shrinkR = shrinkProgress > 0 ? shrinkProgress * 20 : boxRadius;
@@ -70,32 +70,33 @@ const ShowcaseSection = () => {
   const overlayFade = shrinkProgress > 0 ? Math.max(0, 1 - shrinkProgress * 3) : 1;
   const reflectionFade = shrinkProgress > 0 ? Math.max(0, 1 - shrinkProgress * 2) : 1;
 
-  // During shrink, show single black controller emerging
   const singleBlackOpacity = shrinkProgress > 0.5 ? Math.min((shrinkProgress - 0.5) * 4, 1) : 0;
   const dualFade = shrinkProgress > 0.4 ? Math.max(0, 1 - (shrinkProgress - 0.4) * 3) : 1;
 
-  const finalW = shrinkProgress > 0 ? shrinkW : boxWidth;
-  const finalH = shrinkProgress > 0 ? shrinkH : boxHeight;
-  const finalR = shrinkProgress > 0 ? shrinkR : boxRadius;
+  // Clamp to 100 when nearly full to avoid sub-pixel gaps
+  const rawW = shrinkProgress > 0 ? shrinkW : boxWidth;
+  const rawH = shrinkProgress > 0 ? shrinkH : boxHeight;
+  const finalW = rawW > 85 ? 100 : rawW;
+  const finalH = rawH > 85 ? 100 : rawH;
+  const finalR = (finalW >= 100 && finalH >= 100) ? 0 : (shrinkProgress > 0 ? shrinkR : boxRadius);
 
-  // Phase 3: Keyboard box
+  // Keyboard box
   const kbBoxOpacity = shrinkProgress > 0.4 ? Math.min((shrinkProgress - 0.4) * 2.5, 1) : 0;
   const kbBoxY = shrinkProgress > 0.4 ? Math.max(0, (1 - (shrinkProgress - 0.4) * 2.5) * 60) : 60;
   const kbBoxW = 45 + kbExpandProgress * 55;
   const kbBoxH = 30 + kbExpandProgress * 70;
   const kbBoxR = Math.max(0, 20 * (1 - kbExpandProgress));
-
-  // Keyboard image: starts partial (top-right corner), expands to centered full
   const kbImgScale = 0.6 + kbExpandProgress * 0.4;
   const kbSingleOpacity = kbExpandProgress > 0.5 ? Math.max(0, 1 - (kbExpandProgress - 0.5) * 4) : 1;
   const kbFullOpacity = kbExpandProgress > 0.5 ? Math.min((kbExpandProgress - 0.5) * 4, 1) : 0;
-
-  // Controller box should move up as keyboard expands
   const controllerBoxShift = kbExpandProgress > 0 ? -kbExpandProgress * 120 : 0;
   const controllerBoxFade = kbExpandProgress > 0.3 ? Math.max(0, 1 - (kbExpandProgress - 0.3) * 2) : 1;
-
-  // Keyboard section nav/text appears when fully expanded
   const kbNavOpacity = kbExpandProgress > 0.8 ? Math.min((kbExpandProgress - 0.8) * 5, 1) : 0;
+
+  // When controller box is fullscreen, use absolute positioning to cover entire viewport
+  const isControllerFullscreen = expandProgress >= 0.95 && shrinkProgress < 0.05;
+  // When keyboard is fullscreen
+  const isKbFullscreen = kbExpandProgress >= 0.95;
 
   return (
     <section
@@ -120,19 +121,20 @@ const ShowcaseSection = () => {
       </div>
 
       {/* Sticky container */}
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center mt-8 gap-4 overflow-hidden">
-        
-        {/* Controller box */}
+      <div className="sticky top-0 h-screen overflow-hidden">
+        {/* Controller box - absolute so it can truly fill the viewport */}
         <div
-          className="relative flex items-center justify-center overflow-hidden flex-shrink-0"
+          className="absolute flex items-center justify-center overflow-hidden"
           style={{
-            width: `${finalW}%`,
-            height: `${finalH}vh`,
+            left: `${(100 - finalW) / 2}%`,
+            right: `${(100 - finalW) / 2}%`,
+            top: `${(100 - finalH) / 2}%`,
+            bottom: `${(100 - finalH) / 2}%`,
             borderRadius: `${finalR}px`,
             background: "linear-gradient(180deg, #909090 0%, #b0b0b0 40%, #c0c0c0 70%, #808080 100%)",
-            transform: `translateY(${imageTranslateY * 0.3 + controllerBoxShift}px)`,
             opacity: imageOpacity * controllerBoxFade,
-            transition: "width 0.05s linear, height 0.05s linear, border-radius 0.05s linear, opacity 0.1s linear",
+            transition: "opacity 0.1s linear",
+            zIndex: 2,
           }}
         >
           {/* Single controller - initial */}
@@ -242,20 +244,26 @@ const ShowcaseSection = () => {
           </div>
         </div>
 
-        {/* Keyboard box - appears during shrink, then expands to fullscreen */}
+        {/* Keyboard box */}
         <div
-          className="relative flex items-center justify-center overflow-hidden flex-shrink-0"
+          className="absolute flex items-center justify-center overflow-hidden"
           style={{
-            width: `${kbBoxW}%`,
-            height: `${kbBoxH}vh`,
+            width: isKbFullscreen ? "100%" : `${kbBoxW}%`,
+            height: isKbFullscreen ? "100vh" : `${kbBoxH}vh`,
             borderRadius: `${kbBoxR}px`,
             background: "linear-gradient(180deg, #909090 0%, #b0b0b0 40%, #c0c0c0 70%, #808080 100%)",
             opacity: kbBoxOpacity,
-            transform: `translateY(${kbBoxY}px)`,
+            left: "50%",
+            bottom: shrinkProgress < 1 ? "5%" : "auto",
+            top: shrinkProgress >= 1 ? "50%" : "auto",
+            transform: shrinkProgress >= 1
+              ? `translate(-50%, -50%) translateY(${kbBoxY}px)`
+              : `translateX(-50%) translateY(${kbBoxY}px)`,
             transition: "width 0.05s linear, height 0.05s linear, border-radius 0.05s linear, opacity 0.1s linear, transform 0.05s linear",
+            zIndex: 1,
           }}
         >
-          {/* Partial keyboard - visible initially, fades as box expands */}
+          {/* Partial keyboard */}
           <img
             src={keyboardImg}
             alt="Mechanical Keyboard"
@@ -266,7 +274,7 @@ const ShowcaseSection = () => {
             }}
           />
 
-          {/* Full keyboard - appears when box is expanded */}
+          {/* Full keyboard */}
           <img
             src={keyboardFull}
             alt="Mechanical Keyboard Full"
@@ -279,7 +287,7 @@ const ShowcaseSection = () => {
             }}
           />
 
-          {/* Keyboard section nav - appears when fully expanded */}
+          {/* Keyboard nav */}
           <div
             className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-6 md:px-10 py-5"
             style={{ opacity: kbNavOpacity }}

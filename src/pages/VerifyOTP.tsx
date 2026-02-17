@@ -51,10 +51,10 @@ const VerifyOTP = () => {
           <ArrowLeft className="w-6 h-6" />
         </button>
 
-        <div className="w-full max-w-md">
-          <h1 className="text-white text-3xl font-light italic mb-12">Forget Password</h1>
+        <div className="w-full max-w-lg">
+          <h1 className="text-white text-3xl font-light italic mb-16">Forget Password</h1>
 
-          <div className="flex justify-between gap-4 mb-3">
+          <div className="flex justify-center gap-8 mb-3">
             {otp.map((digit, i) => (
               <input
                 key={i}
@@ -65,11 +65,11 @@ const VerifyOTP = () => {
                 value={digit}
                 onChange={(e) => handleChange(i, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(i, e)}
-                className="flex-1 bg-transparent border-b-2 border-white/20 text-white text-center text-2xl py-3 outline-none focus:border-white/60 transition-colors"
+                className="w-20 bg-transparent border-b-2 border-white/20 text-white text-center text-2xl py-3 outline-none focus:border-white/60 transition-colors"
               />
             ))}
           </div>
-          <p className="text-white/30 text-xs text-center tracking-wider uppercase mb-8">OTP</p>
+          <p className="text-white/30 text-xs text-center tracking-wider uppercase mb-10">OTP</p>
 
           <button className="w-full py-3 rounded-full border border-white/30 text-white text-sm tracking-wider hover:bg-white/10 transition-colors">
             Proceed

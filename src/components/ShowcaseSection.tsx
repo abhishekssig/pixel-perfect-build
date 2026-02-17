@@ -4,15 +4,22 @@ import controllerImg from "@/assets/controller.png";
 const ShowcaseSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [expandProgress, setExpandProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
       const vh = window.innerHeight;
-      // Progress from 0 (section just entering) to 1 (fully in view)
+      // Image entrance
       const progress = Math.min(Math.max((vh - rect.top) / vh, 0), 1);
       setScrollProgress(progress);
+
+      // Expand: when scrolling past the section content
+      const sectionBottom = rect.top + sectionRef.current.offsetHeight;
+      const expandStart = vh * 0.3;
+      const expandP = Math.min(Math.max((expandStart - rect.bottom + sectionRef.current.offsetHeight) / (vh * 0.8), 0), 1);
+      setExpandProgress(expandP);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
@@ -26,9 +33,10 @@ const ShowcaseSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative z-20 bg-black rounded-t-[2rem] min-h-screen px-6 md:px-16 lg:px-24 pt-16 md:pt-24 pb-24 -mt-[100vh]"
+      className="relative z-20 bg-black rounded-t-[2rem] px-6 md:px-16 lg:px-24 pt-16 md:pt-24 pb-24 -mt-[100vh]"
       style={{
         boxShadow: "0 -30px 80px rgba(0,0,0,0.8)",
+        minHeight: "120vh",
       }}
     >
       <h2 className="text-white text-3xl md:text-5xl font-light leading-tight">
@@ -38,7 +46,7 @@ const ShowcaseSection = () => {
         Discover the standout features and design of our latest innovation. We're showcasing a product that blends performance, style, and smart functionality.
       </p>
 
-      {/* Controller image with scroll-driven animation */}
+      {/* Controller image */}
       <div className="flex justify-center mt-16 md:mt-24">
         <div
           className="w-full max-w-2xl rounded-2xl overflow-hidden"

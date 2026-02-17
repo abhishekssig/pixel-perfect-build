@@ -85,12 +85,11 @@ const HeroSection = () => {
           </h1>
 
           {/* CTA Box */}
-          <button className="hidden md:block px-6 py-4 border border-white/40 bg-white/10 backdrop-blur-sm text-white text-sm leading-relaxed tracking-wide hover:bg-white/20 transition-colors">
-            Discover
-            <br />
-            Our
-            <br />
-            Collection
+          <button className="hidden md:flex flex-col items-start gap-0 px-5 py-4 rounded-md bg-neutral-800/80 backdrop-blur-sm text-white text-sm leading-snug tracking-wide hover:bg-neutral-700/80 transition-colors relative">
+            <span>Discover</span>
+            <span>Our</span>
+            <span>Collection</span>
+            <span className="absolute bottom-2 right-2 text-white/50 text-xs">↗</span>
           </button>
         </div>
       </div>

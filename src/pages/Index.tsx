@@ -3,6 +3,7 @@ import SplashScreen from "@/components/SplashScreen";
 import HeroSection from "@/components/HeroSection";
 import ShowcaseSection from "@/components/ShowcaseSection";
 import KeyboardSection from "@/components/KeyboardSection";
+import TestimonialSection from "@/components/TestimonialSection";
 
 const Index = () => {
   const [splashDone, setSplashDone] = useState(false);
@@ -14,6 +15,7 @@ const Index = () => {
       <HeroSection />
       <ShowcaseSection />
       <KeyboardSection />
+      <TestimonialSection />
     </>
   );
 };

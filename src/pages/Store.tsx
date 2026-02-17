@@ -16,15 +16,15 @@ import webcamImg from "@/assets/webcam.png";
 const categories = ["New", "Keyboard", "Printed Mouse", "Headphone Stand", "Gamepad"];
 
 const products = [
-  { id: 1, img: mouseImg, className: "col-span-1 row-span-1" },
-  { id: 2, img: keyboardImg, className: "col-span-1 row-span-2" },
-  { id: 3, img: gamepadImg, className: "col-span-1 row-span-1" },
-  { id: 4, img: headphonesImg, className: "col-span-2 row-span-1" },
-  { id: 5, img: speakerImg, className: "col-span-1 row-span-1" },
-  { id: 6, img: chargerImg, className: "col-span-1 row-span-2" },
-  { id: 7, img: accessoriesImg, className: "col-span-1 row-span-1" },
-  { id: 8, img: numpadImg, className: "col-span-2 row-span-1" },
-  { id: 9, img: webcamImg, className: "col-span-1 row-span-1" },
+  { id: 1, img: mouseImg, name: "Rebel Head Pro Click R2", price: "INR 3500.93", className: "col-span-1 row-span-1" },
+  { id: 2, img: keyboardImg, name: "Rebel Head Mech K1", price: "INR 5999.00", className: "col-span-1 row-span-2" },
+  { id: 3, img: gamepadImg, name: "Rebel Head Gyro Pad", price: "INR 4299.00", className: "col-span-1 row-span-1" },
+  { id: 4, img: headphonesImg, name: "Rebel Head Audio X", price: "INR 2999.00", className: "col-span-2 row-span-1" },
+  { id: 5, img: speakerImg, name: "Rebel Head Boom S1", price: "INR 1899.00", className: "col-span-1 row-span-1" },
+  { id: 6, img: chargerImg, name: "Rebel Head Power Hub", price: "INR 1499.00", className: "col-span-1 row-span-2" },
+  { id: 7, img: accessoriesImg, name: "Rebel Head Essentials Kit", price: "INR 2499.00", className: "col-span-1 row-span-1" },
+  { id: 8, img: numpadImg, name: "Rebel Head Num Pad N1", price: "INR 1799.00", className: "col-span-2 row-span-1" },
+  { id: 9, img: webcamImg, name: "Rebel Head Cam Pro", price: "INR 3299.00", className: "col-span-1 row-span-1" },
 ];
 
 const Store = () => {
@@ -112,10 +112,19 @@ const Store = () => {
             >
               <img
                 src={product.img}
-                alt="Product"
+                alt={product.name}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                <div>
+                  <p className="text-white text-sm font-medium leading-tight">{product.name}</p>
+                  <p className="text-red-400 text-sm font-semibold mt-1">{product.price}</p>
+                </div>
+                <button className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-white/20 bg-white/10 backdrop-blur-sm text-white text-xs whitespace-nowrap hover:bg-white/20 transition-colors">
+                  View Product <span className="text-sm">↗</span>
+                </button>
+              </div>
             </div>
           ))}
       </div>

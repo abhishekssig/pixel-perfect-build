@@ -40,7 +40,7 @@ const ShowcaseSection = () => {
   // Single controller fades out, dual controllers fade in
   const singleControllerOpacity = expandProgress > 0.6 ? Math.max(0, 1 - (expandProgress - 0.6) * 5) : 1;
   const gyroContentOpacity = expandProgress > 0.7 ? Math.min((expandProgress - 0.7) * 3.3, 1) : 0;
-  const gyroControllerY = expandProgress > 0.7 ? Math.max(0, (1 - (expandProgress - 0.7) * 3.3) * 120) : 120;
+  const gyroControllerY = expandProgress > 0.7 ? Math.max(0, (1 - (expandProgress - 0.7) * 3.3) * 200) : 200;
 
   return (
     <section
@@ -115,14 +115,14 @@ const ShowcaseSection = () => {
               <img
                 src={controllerWhite}
                 alt="White Controller"
-                className="w-[35%] md:w-[300px] drop-shadow-2xl"
-                style={{ transform: "rotate(-8deg)" }}
+                className="w-[42%] md:w-[380px]"
+                style={{ transform: "rotate(-8deg)", filter: "drop-shadow(0 25px 35px rgba(0,0,0,0.6))" }}
               />
               <img
                 src={controllerBlack}
                 alt="Black Controller"
-                className="w-[35%] md:w-[300px] drop-shadow-2xl"
-                style={{ transform: "rotate(5deg)" }}
+                className="w-[42%] md:w-[380px]"
+                style={{ transform: "rotate(5deg)", filter: "drop-shadow(0 25px 35px rgba(0,0,0,0.6))" }}
               />
             </div>
 
@@ -137,8 +137,8 @@ const ShowcaseSection = () => {
                 WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,0.4), transparent)",
               }}
             >
-              <img src={controllerWhite} alt="" className="w-[35%] md:w-[300px]" style={{ transform: "rotate(-8deg)" }} />
-              <img src={controllerBlack} alt="" className="w-[35%] md:w-[300px]" style={{ transform: "rotate(5deg)" }} />
+              <img src={controllerWhite} alt="" className="w-[42%] md:w-[380px]" style={{ transform: "rotate(-8deg)" }} />
+              <img src={controllerBlack} alt="" className="w-[42%] md:w-[380px]" style={{ transform: "rotate(5deg)" }} />
             </div>
 
             {/* Bottom text + CTA */}

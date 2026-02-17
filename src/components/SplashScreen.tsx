@@ -74,7 +74,7 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
           transition: "opacity 0.5s ease-in",
         }}
       >
-        SUSPENDED
+        REBEL HEAD
       </span>
     </div>
   );

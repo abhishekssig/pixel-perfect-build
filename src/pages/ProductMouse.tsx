@@ -12,6 +12,15 @@ const VARIANTS = [
   { id: 6, color: "#4a4a4a" },
 ];
 
+const FEATURES = [
+  { icon: "🔴", title: "52g", subtitle: "ULTRA WEIGHT", color: "text-red-500" },
+  { icon: "🖐️", title: "ERGONOMIC", subtitle: "RIGHT HAND", color: "text-red-400" },
+  { icon: "⚡", title: "OPTICAL SWITCH", subtitle: "DOUBLE CLICK FREE", color: "text-red-500" },
+  { icon: "◎", title: "XS-1", subtitle: "FLAGSHIP SENSOR", color: "text-red-400" },
+  { icon: "↑", title: "8000Hz", subtitle: "UP TO 8K POLLING RATE", color: "text-red-500" },
+  { icon: "⫰", title: "FINE TUNE", subtitle: "ADJUSTABLE DPI IN 10-UNIT", color: "text-red-400" },
+];
+
 const ProductMouse = () => {
   const navigate = useNavigate();
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -20,7 +29,7 @@ const ProductMouse = () => {
   useEffect(() => {
     const handleScroll = () => {
       const ratio = window.scrollY / (window.innerHeight * 0.5);
-      setScrollProgress(Math.min(ratio, 1));
+      setScrollProgress(ratio);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -30,10 +39,13 @@ const ProductMouse = () => {
   const showVariants = scrollProgress > 0.5;
   const showPrice = scrollProgress > 0.7;
 
+  // Features drawer: starts sliding up after scrollProgress > 1.2
+  const drawerProgress = Math.min(1, Math.max(0, (scrollProgress - 1.2) / 0.8));
+
   return (
-    <div className="min-h-[250vh] bg-[#1a1a1a] text-white">
+    <div className="min-h-[400vh] bg-[#1a1a1a] text-white">
       {/* Top Nav */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-4">
+      <div className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-6 md:px-10 py-4">
         <img
           src={logo}
           alt="Rebel Head"
@@ -58,14 +70,13 @@ const ProductMouse = () => {
       </div>
 
       {/* Hero Section - sticky */}
-      <div className="sticky top-0 h-screen px-6 md:px-10 flex flex-col md:flex-row items-center pt-20 relative">
+      <div className="sticky top-0 h-screen px-6 md:px-10 flex flex-col md:flex-row items-center pt-20 relative z-10">
         {/* Left Content */}
         <div className="flex-1 z-10 pt-10 md:pt-0 flex flex-col justify-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-light leading-tight mb-6">
             Rebel head Pro click<br />R2
           </h1>
 
-          {/* Description - scroll reveal */}
           <div
             className="transition-all duration-700 ease-out"
             style={{
@@ -79,7 +90,6 @@ const ProductMouse = () => {
             </p>
           </div>
 
-          {/* Variant selector - scroll reveal */}
           <div
             className="mt-6 transition-all duration-700 ease-out"
             style={{
@@ -104,7 +114,6 @@ const ProductMouse = () => {
             </div>
           </div>
 
-          {/* Price + Add to Cart - scroll reveal */}
           <div
             className="mt-6 transition-all duration-700 ease-out"
             style={{
@@ -135,12 +144,40 @@ const ProductMouse = () => {
           <div className="flex items-center gap-1 w-[200px]">
             <div
               className="h-[3px] bg-red-500 rounded-full transition-all duration-300"
-              style={{ flex: Math.max(0.2, scrollProgress) }}
+              style={{ flex: Math.max(0.2, Math.min(1, scrollProgress)) }}
             />
             <div
               className="h-[3px] bg-white/20 rounded-full transition-all duration-300"
-              style={{ flex: Math.max(0.1, 1 - scrollProgress) }}
+              style={{ flex: Math.max(0.1, 1 - Math.min(1, scrollProgress)) }}
             />
+          </div>
+        </div>
+      </div>
+
+      {/* Features Drawer - slides up over the hero */}
+      <div
+        className="fixed inset-0 z-20 pointer-events-none"
+        style={{
+          transform: `translateY(${100 - drawerProgress * 100}%)`,
+        }}
+      >
+        <div className="w-full h-full bg-[#0a0a0a] pointer-events-auto flex flex-col items-center justify-center px-6 md:px-16">
+          <div className="grid grid-cols-2 gap-x-16 md:gap-x-32 gap-y-12 md:gap-y-16 max-w-3xl w-full">
+            {FEATURES.map((feat, i) => (
+              <div
+                key={i}
+                className="flex flex-col items-center text-center"
+                style={{
+                  opacity: drawerProgress > 0.5 ? 1 : 0,
+                  transform: drawerProgress > 0.5 ? "translateY(0)" : "translateY(30px)",
+                  transition: `all 0.6s ease-out ${i * 0.1}s`,
+                }}
+              >
+                <span className={`text-3xl md:text-4xl mb-2 ${feat.color}`}>{feat.icon}</span>
+                <h3 className="text-white text-lg md:text-xl font-semibold tracking-wide">{feat.title}</h3>
+                <p className="text-white/50 text-xs uppercase tracking-widest mt-1">{feat.subtitle}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

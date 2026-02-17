@@ -41,6 +41,7 @@ const ShowcaseSection = () => {
   const singleControllerOpacity = expandProgress > 0.6 ? Math.max(0, 1 - (expandProgress - 0.6) * 5) : 1;
   const gyroContentOpacity = expandProgress > 0.7 ? Math.min((expandProgress - 0.7) * 3.3, 1) : 0;
   const gyroControllerY = expandProgress > 0.7 ? Math.max(0, (1 - (expandProgress - 0.7) * 3.3) * 200) : 200;
+  const gyroScale = expandProgress > 0.7 ? 0.7 + Math.min((expandProgress - 0.7) * 3.3, 1) * 0.3 : 0.7;
 
   return (
     <section
@@ -108,7 +109,7 @@ const ShowcaseSection = () => {
             <div
               className="relative w-full max-w-4xl flex items-center justify-center gap-8 md:gap-16 px-8"
               style={{
-                transform: `translateY(${gyroControllerY}px)`,
+                transform: `translateY(${gyroControllerY}px) scale(${gyroScale})`,
                 transition: "transform 0.05s linear",
               }}
             >

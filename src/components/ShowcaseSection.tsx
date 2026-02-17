@@ -207,7 +207,7 @@ const ShowcaseSection = () => {
                   Gamepad with gyro sensor enables precise motion-controlled immersive gameplay.
                 </p>
               </div>
-              <button className="hidden md:flex flex-col items-start gap-0 px-5 py-4 rounded-md bg-white/10 backdrop-blur-sm text-white text-sm leading-snug tracking-wide hover:bg-white/20 transition-colors relative border border-white/20">
+              <button onClick={() => navigate("/store")} className="hidden md:flex flex-col items-start gap-0 px-5 py-4 rounded-md bg-white/10 backdrop-blur-sm text-white text-sm leading-snug tracking-wide hover:bg-white/20 transition-colors relative border border-white/20">
                 <span>Discover</span>
                 <span>Our</span>
                 <span>Collection</span>

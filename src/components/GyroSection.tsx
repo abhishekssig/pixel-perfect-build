@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import controllerBlack from "@/assets/controller-black.png";
 import controllerWhite from "@/assets/controller-white.png";
 
 const GyroSection = () => {
+  const navigate = useNavigate();
   const sectionRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
 
@@ -40,7 +42,7 @@ const GyroSection = () => {
           <span className="text-base">☰</span>
           <span>MENU</span>
         </button>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm text-white text-sm tracking-wide">
+        <button onClick={() => navigate("/signup")} className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm text-white text-sm tracking-wide">
           <span className="text-base">👤</span>
           <span>Account</span>
         </button>

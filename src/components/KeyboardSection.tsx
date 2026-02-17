@@ -7,8 +7,8 @@ const KeyboardSection = () => {
         <div
           className="relative overflow-hidden rounded-3xl"
           style={{
-            width: "45%",
-            height: "40vh",
+            width: "55%",
+            height: "50vh",
             background:
               "linear-gradient(180deg, #909090 0%, #b0b0b0 40%, #c0c0c0 70%, #808080 100%)",
           }}
@@ -19,9 +19,9 @@ const KeyboardSection = () => {
             alt="Mechanical Keyboard"
             className="absolute"
             style={{
-              width: "130%",
-              bottom: "-35%",
-              right: "-15%",
+              width: "200%",
+              bottom: "-40%",
+              right: "-25%",
               objectFit: "contain",
             }}
           />

@@ -23,7 +23,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full h-[180vh]">
+    <section ref={sectionRef} className="relative w-full h-[280vh]">
       {/* Sticky hero container */}
       <div className="sticky top-0 w-full h-screen overflow-hidden bg-black">
         {/* Video background */}

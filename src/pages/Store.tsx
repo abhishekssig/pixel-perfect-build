@@ -15,15 +15,15 @@ import webcamImg from "@/assets/webcam.png";
 const categories = ["New", "Keyboard", "Printed Mouse", "Headphone Stand", "Gamepad"];
 
 const products = [
-  { id: 1, img: mouseImg, span: "col-span-1 row-span-1", aspect: "aspect-square" },
-  { id: 2, img: keyboardImg, span: "col-span-1 row-span-1", aspect: "aspect-square" },
-  { id: 3, img: gamepadImg, span: "col-span-1 row-span-2", aspect: "" },
-  { id: 4, img: headphonesImg, span: "col-span-1 row-span-1", aspect: "aspect-square" },
-  { id: 5, img: speakerImg, span: "col-span-1 row-span-1", aspect: "aspect-[16/10]" },
-  { id: 6, img: chargerImg, span: "col-span-1 row-span-1", aspect: "aspect-square" },
-  { id: 7, img: accessoriesImg, span: "col-span-2 row-span-1", aspect: "aspect-[2/1]" },
-  { id: 8, img: numpadImg, span: "col-span-1 row-span-1", aspect: "aspect-square" },
-  { id: 9, img: webcamImg, span: "col-span-1 row-span-1", aspect: "aspect-square" },
+  { id: 1, img: mouseImg, className: "col-span-1 row-span-1" },
+  { id: 2, img: keyboardImg, className: "col-span-1 row-span-2" },
+  { id: 3, img: gamepadImg, className: "col-span-1 row-span-1" },
+  { id: 4, img: headphonesImg, className: "col-span-2 row-span-1" },
+  { id: 5, img: speakerImg, className: "col-span-1 row-span-1" },
+  { id: 6, img: chargerImg, className: "col-span-1 row-span-2" },
+  { id: 7, img: accessoriesImg, className: "col-span-1 row-span-1" },
+  { id: 8, img: numpadImg, className: "col-span-2 row-span-1" },
+  { id: 9, img: webcamImg, className: "col-span-1 row-span-1" },
 ];
 
 const Store = () => {
@@ -39,7 +39,7 @@ const Store = () => {
           alt="Rebel Head"
           className="w-10 h-10 cursor-pointer"
           onClick={() => navigate("/")}
-          style={{ filter: "drop-shadow(0 0 6px rgba(255,0,0,0.3))" }}
+          style={{ filter: "brightness(0) invert(1) drop-shadow(0 0 6px rgba(255,0,0,0.3))" }}
         />
         <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide">
           <span className="text-base">☰</span>
@@ -103,11 +103,11 @@ const Store = () => {
 
       {/* Product Grid */}
       <div className="px-6 md:px-10 pb-16">
-        <div className="grid grid-cols-2 auto-rows-[280px] md:auto-rows-[350px] gap-3">
+        <div className="grid grid-cols-3 auto-rows-[220px] md:auto-rows-[280px] gap-3">
           {products.map((product) => (
             <div
               key={product.id}
-              className={`${product.span} rounded-xl overflow-hidden cursor-pointer group relative bg-neutral-900`}
+              className={`${product.className} rounded-2xl overflow-hidden cursor-pointer group relative bg-neutral-900`}
             >
               <img
                 src={product.img}

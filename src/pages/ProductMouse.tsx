@@ -42,8 +42,11 @@ const ProductMouse = () => {
   // Features drawer: starts sliding up after scrollProgress > 1.2
   const drawerProgress = Math.min(1, Math.max(0, (scrollProgress - 1.2) / 0.8));
 
+  // Specs drawer: starts sliding up after scrollProgress > 2.2
+  const specsProgress = Math.min(1, Math.max(0, (scrollProgress - 2.2) / 0.8));
+
   return (
-    <div className="min-h-[400vh] bg-[#1a1a1a] text-white">
+    <div className="min-h-[600vh] bg-[#1a1a1a] text-white">
       {/* Top Nav */}
       <div className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-6 md:px-10 py-4">
         <img
@@ -178,6 +181,61 @@ const ProductMouse = () => {
                 <p className="text-white/50 text-xs uppercase tracking-widest mt-1">{feat.subtitle}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Specs Drawer - slides up over the features */}
+      <div
+        className="fixed inset-0 z-30 pointer-events-none"
+        style={{
+          transform: `translateY(${100 - specsProgress * 100}%)`,
+        }}
+      >
+        <div className="w-full h-full bg-[#0a0a0a] pointer-events-auto flex items-center justify-center px-6 md:px-16">
+          <div className="grid grid-cols-2 gap-x-16 md:gap-x-32 max-w-4xl w-full">
+            {/* Left Column */}
+            <div
+              style={{
+                opacity: specsProgress > 0.5 ? 1 : 0,
+                transform: specsProgress > 0.5 ? "translateY(0)" : "translateY(30px)",
+                transition: "all 0.6s ease-out",
+              }}
+            >
+              <h2 className="text-2xl md:text-3xl font-light italic mb-6">Package Content</h2>
+              <ul className="space-y-3 text-white/70 text-sm mb-10">
+                <li className="flex items-start gap-2"><span className="text-white/40 mt-1">•</span> Xlite v4 Wireless Mouse x 1</li>
+                <li className="flex items-start gap-2"><span className="text-white/40 mt-1">•</span> 8K Dongle x 1</li>
+                <li className="flex items-start gap-2"><span className="text-white/40 mt-1">•</span> USB-C Cable x 1</li>
+              </ul>
+
+              <h2 className="text-2xl md:text-3xl font-light italic mb-6">Dimensions</h2>
+              <ul className="space-y-3 text-white/70 text-sm">
+                <li className="flex items-start gap-2"><span className="text-white/40 mt-1">•</span> Length: 1.62in (41mm)</li>
+                <li className="flex items-start gap-2"><span className="text-white/40 mt-1">•</span> Width: 1.62in (41mm)</li>
+                <li className="flex items-start gap-2"><span className="text-white/40 mt-1">•</span> Height: 3.56in (90.4mm)</li>
+              </ul>
+            </div>
+
+            {/* Right Column */}
+            <div
+              style={{
+                opacity: specsProgress > 0.5 ? 1 : 0,
+                transform: specsProgress > 0.5 ? "translateY(0)" : "translateY(30px)",
+                transition: "all 0.6s ease-out 0.15s",
+              }}
+            >
+              <h2 className="text-2xl md:text-3xl font-light italic mb-6">Sensors</h2>
+              <ul className="space-y-3 text-white/70 text-sm">
+                <li className="flex items-start gap-2"><span className="text-white/40 mt-1">•</span> XS-1 Flagship Sensor</li>
+                <li className="flex items-start gap-2"><span className="text-white/40 mt-1">•</span> 32,000 DPI</li>
+                <li className="flex items-start gap-2"><span className="text-white/40 mt-1">•</span> 750 IPS</li>
+                <li className="flex items-start gap-2"><span className="text-white/40 mt-1">•</span> 50g Acceleration</li>
+                <li className="flex items-start gap-2"><span className="text-white/40 mt-1">•</span> 1000Hz/1ms Polling Rate</li>
+                <li className="flex items-start gap-2"><span className="text-white/40 mt-1">•</span> 32bit ARM Processor</li>
+                <li className="flex items-start gap-2"><span className="text-white/40 mt-1">•</span> 3Up to 8K Polling Rate</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

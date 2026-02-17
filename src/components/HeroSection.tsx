@@ -9,9 +9,10 @@ const HeroSection = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      if (scrollY > 400) {
+      const vh = window.innerHeight;
+      if (scrollY > vh * 1.2) {
         setStage(2);
-      } else if (scrollY > 80) {
+      } else if (scrollY > vh * 0.15) {
         setStage(1);
       } else {
         setStage(0);

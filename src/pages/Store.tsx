@@ -108,6 +108,7 @@ const Store = () => {
           {products.map((product) => (
             <div
               key={product.id}
+              onClick={() => product.id === 1 ? navigate("/product/mouse") : undefined}
               className={`${product.className} rounded-2xl overflow-hidden cursor-pointer group relative bg-neutral-900`}
             >
               <img

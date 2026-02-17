@@ -10,6 +10,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import VerifyOTP from "./pages/VerifyOTP";
 import CreateNewPassword from "./pages/CreateNewPassword";
 import Store from "./pages/Store";
+import ProductMouse from "./pages/ProductMouse";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/verify-otp" element={<VerifyOTP />} />
           <Route path="/create-new-password" element={<CreateNewPassword />} />
           <Route path="/store" element={<Store />} />
+          <Route path="/product/mouse" element={<ProductMouse />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

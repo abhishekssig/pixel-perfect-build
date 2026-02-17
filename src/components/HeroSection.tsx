@@ -48,21 +48,17 @@ const HeroSection = () => {
           style={{ opacity: stage === 1 ? 1 : 0 }}
         >
           <div />
-          
-          {/* Center menu */}
           <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm text-white text-sm tracking-wide">
             <span className="text-base">☰</span>
             <span>MENU</span>
           </button>
-
-          {/* Account top-right */}
           <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm text-white text-sm tracking-wide">
             <span className="text-base">👤</span>
             <span>Account</span>
           </button>
         </div>
 
-        {/* Logo top-left - always visible */}
+        {/* Logo top-left */}
         <div className="absolute top-5 left-6 md:left-10 z-10">
           <img
             src={logo}
@@ -75,7 +71,7 @@ const HeroSection = () => {
           />
         </div>
 
-        {/* Bottom content - appears on stage 1, hides on stage 2 */}
+        {/* Bottom content */}
         <div
           className="absolute bottom-12 left-6 md:left-10 right-6 md:right-10 z-10 flex items-end justify-between transition-all duration-700"
           style={{
@@ -83,7 +79,6 @@ const HeroSection = () => {
             transform: stage === 1 ? "translateY(0)" : "translateY(20px)",
           }}
         >
-          {/* Tagline + description */}
           <div className="max-w-lg">
             <h1 className="text-white text-2xl md:text-4xl lg:text-5xl font-light leading-tight">
               Rebel Against the Ordinary. Game
@@ -96,8 +91,6 @@ const HeroSection = () => {
               leaders.
             </p>
           </div>
-
-          {/* CTA Box */}
           <button className="hidden md:flex flex-col items-start gap-0 px-5 py-4 rounded-md bg-neutral-800/80 backdrop-blur-sm text-white text-sm leading-snug tracking-wide hover:bg-neutral-700/80 transition-colors relative">
             <span>Discover</span>
             <span>Our</span>
@@ -105,6 +98,16 @@ const HeroSection = () => {
             <span className="absolute bottom-2 right-2 text-white/50 text-xs">↗</span>
           </button>
         </div>
+      </div>
+
+      {/* Black drawer that scrolls up over the hero */}
+      <div className="relative z-20 bg-black rounded-t-3xl -mt-[50vh] min-h-screen px-6 md:px-16 lg:px-24 pt-16 md:pt-24">
+        <h2 className="text-white text-3xl md:text-5xl font-light leading-tight">
+          Showcasing Product
+        </h2>
+        <p className="text-white/60 text-sm md:text-base mt-4 max-w-2xl leading-relaxed">
+          Discover the standout features and design of our latest innovation. We're showcasing a product that blends performance, style, and smart functionality.
+        </p>
       </div>
     </section>
   );

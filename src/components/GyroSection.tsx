@@ -30,7 +30,7 @@ const GyroSection = () => {
       ref={sectionRef}
       className="relative z-30 min-h-screen flex flex-col items-center justify-center overflow-hidden"
       style={{
-        background: "linear-gradient(180deg, #6b6b6b 0%, #a0a0a0 40%, #c0c0c0 70%, #8a8a8a 100%)",
+        background: "linear-gradient(180deg, #b0b0b0 0%, #d0d0d0 40%, #e0e0e0 70%, #a0a0a0 100%)",
       }}
     >
       {/* Top nav */}

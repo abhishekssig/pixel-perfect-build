@@ -12,7 +12,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex">
+    <div className="h-screen overflow-hidden bg-black flex">
       {/* Left - Katana image */}
       <div className="hidden md:flex w-[45%] relative items-center justify-center overflow-hidden">
         <img

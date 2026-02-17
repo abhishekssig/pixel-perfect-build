@@ -41,7 +41,7 @@ const KeyboardSection = () => {
   const finalR = (finalW >= 100 && finalH >= 100) ? 0 : boxRadius;
 
   // Keyboard lateral slide: starts left (-60%) slides to right (60%)
-  const kbX = -60 + slideProgress * 120;
+  const kbX = 60 - slideProgress * 120;
   const overlayOpacity = expandProgress > 0.7 ? Math.min((expandProgress - 0.7) * 3.3, 1) : 0;
 
   return (

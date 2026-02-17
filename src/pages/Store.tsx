@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
+import FooterSection from "@/components/FooterSection";
 import logo from "@/assets/Frame_5.png";
 import mouseImg from "@/assets/mouse.png";
 import keyboardImg from "@/assets/keyboard-store.png";
@@ -117,8 +118,11 @@ const Store = () => {
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
             </div>
           ))}
-        </div>
       </div>
+
+      {/* Footer */}
+      <FooterSection />
+    </div>
     </div>
   );
 };

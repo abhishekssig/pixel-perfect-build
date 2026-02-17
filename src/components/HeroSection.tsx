@@ -94,7 +94,7 @@ const HeroSection = () => {
               leaders.
             </p>
           </div>
-          <button className="hidden md:flex flex-col items-start gap-0 px-5 py-4 rounded-md bg-neutral-800/80 backdrop-blur-sm text-white text-sm leading-snug tracking-wide hover:bg-neutral-700/80 transition-colors relative">
+          <button onClick={() => navigate("/store")} className="hidden md:flex flex-col items-start gap-0 px-5 py-4 rounded-md bg-neutral-800/80 backdrop-blur-sm text-white text-sm leading-snug tracking-wide hover:bg-neutral-700/80 transition-colors relative">
             <span>Discover</span>
             <span>Our</span>
             <span>Collection</span>

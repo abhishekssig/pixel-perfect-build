@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import logo from "@/assets/Frame_5.png";
 import mouseHero from "@/assets/mouse-hero.png";
-import FooterSection from "@/components/FooterSection";
+
 
 const ProductMouse = () => {
   const navigate = useNavigate();
@@ -64,9 +64,6 @@ const ProductMouse = () => {
         </div>
       </div>
 
-      <div className="mt-16">
-        <FooterSection />
-      </div>
     </div>
   );
 };

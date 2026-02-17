@@ -71,7 +71,7 @@ const VerifyOTP = () => {
           </div>
           <p className="text-white/30 text-xs text-center tracking-wider uppercase mb-10">OTP</p>
 
-          <button className="w-full py-3 rounded-full border border-white/30 text-white text-sm tracking-wider hover:bg-white/10 transition-colors">
+          <button onClick={() => navigate("/create-new-password")} className="w-full py-3 rounded-full border border-white/30 text-white text-sm tracking-wider hover:bg-white/10 transition-colors">
             Proceed
           </button>
         </div>

@@ -27,6 +27,19 @@ import Terms from "./pages/Terms";
 import Events from "./pages/Events";
 import NotFound from "./pages/NotFound";
 
+// Admin
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminGuard from "./components/admin/AdminGuard";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminOrders from "./pages/admin/AdminOrders";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminProducts from "./pages/admin/AdminProducts";
+import AdminSupport from "./pages/admin/AdminSupport";
+import AdminWarranty from "./pages/admin/AdminWarranty";
+import AdminDrivers from "./pages/admin/AdminDrivers";
+import AdminAnalytics from "./pages/admin/AdminAnalytics";
+import PageTracker from "./components/PageTracker";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -37,6 +50,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <PageTracker />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/signup" element={<SignUp />} />
@@ -58,6 +72,19 @@ const App = () => (
               <Route path="/drivers" element={<Drivers />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/events" element={<Events />} />
+
+              {/* Admin routes - role-based guard */}
+              <Route path="/admin" element={<AdminGuard><AdminLayout /></AdminGuard>}>
+                <Route index element={<AdminDashboard />} />
+                <Route path="orders" element={<AdminOrders />} />
+                <Route path="users" element={<AdminUsers />} />
+                <Route path="products" element={<AdminProducts />} />
+                <Route path="support" element={<AdminSupport />} />
+                <Route path="warranty" element={<AdminWarranty />} />
+                <Route path="drivers" element={<AdminDrivers />} />
+                <Route path="analytics" element={<AdminAnalytics />} />
+              </Route>
+
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

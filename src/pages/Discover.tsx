@@ -28,20 +28,27 @@ const categories = [
 ];
 
 const products = [
-  { id: 1, img: headphonesImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93", link: "/product/mouse" },
-  { id: 2, img: gamepadImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93" },
-  { id: 3, img: keyboardDarkImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93" },
-  { id: 4, img: headphonesImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93" },
-  { id: 5, img: gamepadImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93" },
-  { id: 6, img: keyboardDarkImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93" },
-  { id: 7, img: mouseImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93", link: "/product/mouse" },
-  { id: 8, img: speakerImg, name: "Rebel Head Boom S1", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 1899.00" },
-  { id: 9, img: chargerImg, name: "Rebel Head Power Hub", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 1499.00" },
+  { id: 1, img: mouseImg, name: "Rebel Click Pro R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93", link: "/product/mouse", category: "Mouse" },
+  { id: 2, img: mouse2Img, name: "Rebel Click X1", desc: "Ergonomic wireless mouse with ultra-low latency", price: "INR 2999.00", link: "/product/mouse", category: "Mouse" },
+  { id: 3, img: gamepadImg, name: "Rebel Pad Pro", desc: "Wireless controller with hall effect triggers", price: "INR 4500.93", category: "Gamepad" },
+  { id: 4, img: gamepadImg, name: "Rebel Pad Lite", desc: "Compact gamepad for competitive gaming", price: "INR 3200.00", category: "Gamepad" },
+  { id: 5, img: keyboardDarkImg, name: "Rebel Keys Dark", desc: "Mechanical keyboard with custom switches", price: "INR 5500.93", category: "Keyboard" },
+  { id: 6, img: keyboardImg, name: "Rebel Keys RGB", desc: "Full-size mechanical keyboard with per-key RGB", price: "INR 4999.00", category: "Keyboard" },
+  { id: 7, img: speakerImg, name: "Rebel Head Boom S1", desc: "Immersive surround sound bar for gaming", price: "INR 1899.00", category: "Sound Bar" },
+  { id: 8, img: webcamImg, name: "Rebel Eye 4K", desc: "Ultra HD webcam with auto-focus and noise cancellation", price: "INR 2499.00", category: "Web Cam" },
+  { id: 9, img: numpadImg, name: "Rebel Deck Mini", desc: "Programmable stream deck with LCD keys", price: "INR 3999.00", category: "Stream Deck" },
+  { id: 10, img: chargerImg, name: "Rebel Power Hub", desc: "Multi-device wireless charging station", price: "INR 1499.00", category: "Charging Deck" },
+  { id: 11, img: headphonesImg, name: "Rebel Head Pro", desc: "Premium over-ear headset with spatial audio", price: "INR 3500.93", category: "Sound Bar" },
+  { id: 12, img: accessoriesImg, name: "Rebel Comfort Pad", desc: "Ergonomic seat cushion for extended sessions", price: "INR 999.00", category: "Seat Cushion" },
 ];
 
 const Discover = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+
+  const filteredProducts = activeCategory
+    ? products.filter((p) => p.category === activeCategory)
+    : products;
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -75,12 +82,17 @@ const Discover = () => {
                 activeCategory === cat.name ? "opacity-100" : "opacity-60 hover:opacity-90"
               }`}
             >
-              <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center">
+              <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center relative">
+                <div
+                  className={`absolute inset-0 rounded-full blur-xl transition-opacity duration-300 ${
+                    activeCategory === cat.name ? 'opacity-60' : 'opacity-0 group-hover:opacity-30'
+                  }`}
+                  style={{ background: 'radial-gradient(circle, rgba(147,51,234,0.7) 0%, rgba(79,70,229,0.4) 50%, transparent 80%)' }}
+                />
                 <img
                   src={cat.img}
                   alt={cat.name}
-                  className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
-                  style={{ filter: "drop-shadow(0 4px 12px rgba(255,255,255,0.08))" }}
+                  className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110 relative z-10"
                 />
               </div>
               <span className="text-xs text-white/60 group-hover:text-white/80 transition-colors whitespace-nowrap">
@@ -130,7 +142,7 @@ const Discover = () => {
       {/* Product Grid */}
       <div className="px-6 md:px-10 pb-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <div
               key={product.id}
               className="group cursor-pointer"

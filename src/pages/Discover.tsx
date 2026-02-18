@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import MenuButton from "@/components/MenuButton";
 import CartButton from "@/components/CartButton";
+import AccountButton from "@/components/AccountButton";
 import FooterSection from "@/components/FooterSection";
 import logo from "@/assets/Frame_5.png";
 import mouseImg from "@/assets/mouse.png";
@@ -67,13 +68,7 @@ const Discover = () => {
         <MenuButton />
         <div className="flex items-center gap-3">
           <CartButton />
-          <button
-            onClick={() => navigate("/signup")}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide"
-          >
-            <span className="text-base">👤</span>
-            <span>Account</span>
-          </button>
+          <AccountButton />
         </div>
       </div>
 

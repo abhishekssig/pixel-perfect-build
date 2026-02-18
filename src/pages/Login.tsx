@@ -8,9 +8,27 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleLogin = async () => {
+    if (!formData.email || !formData.password) {
+      setError("Please fill in all fields");
+      return;
+    }
+    setLoading(true);
+    setError("");
+    const result = await login(formData.email, formData.password);
+    setLoading(false);
+    if (result.error) {
+      setError(result.error);
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -55,6 +73,12 @@ const Login = () => {
         <div className="w-full max-w-md">
           <h1 className="text-white text-3xl font-light italic mb-10 text-center">Log In</h1>
 
+          {error && (
+            <div className="mb-6 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center">
+              {error}
+            </div>
+          )}
+
           <div className="space-y-6">
             <div>
               <label className="text-white/40 text-xs tracking-wider uppercase block mb-2">Email</label>
@@ -81,10 +105,11 @@ const Login = () => {
           </div>
 
           <button
-            onClick={() => { login(formData.email, formData.email.split("@")[0]); navigate("/"); }}
-            className="mt-10 w-full py-3 rounded-full border border-white/30 text-white text-sm tracking-wider hover:bg-white/10 transition-colors"
+            onClick={handleLogin}
+            disabled={loading}
+            className="mt-10 w-full py-3 rounded-full border border-white/30 text-white text-sm tracking-wider hover:bg-white/10 transition-colors disabled:opacity-50"
           >
-            Log In
+            {loading ? "Logging in..." : "Log In"}
           </button>
 
           <p className="text-white/30 text-sm text-center mt-8">Or Sign Up With</p>

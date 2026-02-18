@@ -4,6 +4,7 @@ import { Search, Calendar, Clock, ArrowRight, Tag } from "lucide-react";
 import MenuButton from "@/components/MenuButton";
 import CartButton from "@/components/CartButton";
 import AccountButton from "@/components/AccountButton";
+import ShopNowButton from "@/components/ShopNowButton";
 import FooterSection from "@/components/FooterSection";
 import logo from "@/assets/Frame_5.png";
 import mouseImg from "@/assets/mouse-hero.png";
@@ -145,6 +146,7 @@ const Blog = () => {
         />
         <MenuButton />
         <div className="flex items-center gap-3">
+          <ShopNowButton />
           <CartButton />
           <AccountButton />
         </div>

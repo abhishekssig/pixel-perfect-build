@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import MenuButton from "@/components/MenuButton";
 import CartButton from "@/components/CartButton";
 import AccountButton from "@/components/AccountButton";
+import ShopNowButton from "@/components/ShopNowButton";
 import logo from "@/assets/Frame_4.png";
 
 const HeroSection = () => {
@@ -48,8 +49,8 @@ const HeroSection = () => {
           style={{ opacity: stage === 0 ? 0 : stage === 1 ? 0.55 : 0.8 }}
         />
 
-        {/* Top navigation bar */}
-        <div className="relative z-10 flex items-center justify-between px-6 md:px-10 py-5">
+        {/* Top navigation bar - always visible */}
+        <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 md:px-10 py-5">
           <div />
           <div
             className="transition-opacity duration-700"
@@ -58,12 +59,6 @@ const HeroSection = () => {
             <MenuButton className="border-white/30 bg-white/10" />
           </div>
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate("/store")}
-              className="px-5 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm text-white text-sm font-medium tracking-wide hover:bg-white/20 transition-colors"
-            >
-              Shop Now
-            </button>
             <div
               className="flex items-center gap-3 transition-opacity duration-700"
               style={{ opacity: stage === 1 ? 1 : 0, pointerEvents: stage === 1 ? "auto" : "none" }}

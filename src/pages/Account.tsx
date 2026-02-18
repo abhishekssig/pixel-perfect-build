@@ -5,6 +5,7 @@ import { useAuth, AVATARS } from "@/contexts/AuthContext";
 import MenuButton from "@/components/MenuButton";
 import CartButton from "@/components/CartButton";
 import AccountButton from "@/components/AccountButton";
+import ShopNowButton from "@/components/ShopNowButton";
 import FooterSection from "@/components/FooterSection";
 import logo from "@/assets/Frame_5.png";
 
@@ -238,6 +239,7 @@ const Account = () => {
         />
         <MenuButton />
         <div className="flex items-center gap-3">
+          <ShopNowButton />
           <CartButton />
           <AccountButton />
         </div>

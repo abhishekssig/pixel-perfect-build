@@ -385,6 +385,42 @@ export type Database = {
         }
         Relationships: []
       }
+      site_content: {
+        Row: {
+          content_key: string
+          content_type: string
+          content_value: string | null
+          created_at: string
+          id: string
+          is_active: boolean | null
+          section: string
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          content_key: string
+          content_type?: string
+          content_value?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          section: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          content_key?: string
+          content_type?: string
+          content_value?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          section?: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       support_tickets: {
         Row: {
           admin_response: string | null
@@ -418,6 +454,45 @@ export type Database = {
           subject?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          author_avatar: string | null
+          author_name: string
+          author_title: string | null
+          content: string
+          created_at: string
+          id: string
+          is_active: boolean | null
+          rating: number | null
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          author_avatar?: string | null
+          author_name: string
+          author_title?: string | null
+          content: string
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          rating?: number | null
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          author_avatar?: string | null
+          author_name?: string
+          author_title?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          rating?: number | null
+          sort_order?: number | null
+          updated_at?: string
         }
         Relationships: []
       }

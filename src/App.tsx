@@ -41,6 +41,7 @@ import AdminAnalytics from "./pages/admin/AdminAnalytics";
 import AdminBlogs from "./pages/admin/AdminBlogs";
 import AdminEvents from "./pages/admin/AdminEvents";
 import AdminCoupons from "./pages/admin/AdminCoupons";
+import AdminCMS from "./pages/admin/AdminCMS";
 import PageTracker from "./components/PageTracker";
 
 const queryClient = new QueryClient();
@@ -89,6 +90,7 @@ const App = () => (
                 <Route path="warranty" element={<AdminWarranty />} />
                 <Route path="drivers" element={<AdminDrivers />} />
                 <Route path="analytics" element={<AdminAnalytics />} />
+                <Route path="cms" element={<AdminCMS />} />
               </Route>
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

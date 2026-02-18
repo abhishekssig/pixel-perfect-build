@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import {
   LayoutDashboard, ShoppingCart, Users, Package, HeadphonesIcon,
-  Shield, Download, BarChart3, LogOut, ChevronLeft, ChevronRight, Menu
+  Shield, Download, BarChart3, LogOut, ChevronLeft, ChevronRight, Menu,
+  FileText, CalendarDays
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/Frame_5.png";
@@ -12,6 +13,8 @@ const navItems = [
   { label: "Orders", icon: ShoppingCart, path: "/admin/orders" },
   { label: "Users", icon: Users, path: "/admin/users" },
   { label: "Products", icon: Package, path: "/admin/products" },
+  { label: "Blogs", icon: FileText, path: "/admin/blogs" },
+  { label: "Events", icon: CalendarDays, path: "/admin/events" },
   { label: "Support", icon: HeadphonesIcon, path: "/admin/support" },
   { label: "Warranty", icon: Shield, path: "/admin/warranty" },
   { label: "Drivers", icon: Download, path: "/admin/drivers" },

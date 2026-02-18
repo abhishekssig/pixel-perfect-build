@@ -1,5 +1,9 @@
 import { ArrowRight } from "lucide-react";
 
+interface FooterSectionProps {
+  overlap?: boolean;
+}
+
 const socials = [
   { name: "Facebook", href: "#" },
   { name: "Twitter", href: "#" },
@@ -26,11 +30,11 @@ const footerLinks = [
   },
 ];
 
-const FooterSection = () => {
+const FooterSection = ({ overlap = false }: FooterSectionProps) => {
   return (
-    <footer className="relative z-30 -mt-[50vh]">
+    <footer className={`relative z-30 ${overlap ? '-mt-[50vh]' : ''}`}>
       {/* Gradient fade from transparent to black */}
-      <div className="h-40 bg-gradient-to-b from-transparent to-black pointer-events-none" />
+      <div className={`h-40 bg-gradient-to-b ${overlap ? 'from-transparent' : 'from-black'} to-black pointer-events-none`} />
 
       {/* Solid black content area */}
       <div className="bg-black">

@@ -53,7 +53,7 @@ const ProductMouse = () => {
       <div className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-6 md:px-10 py-4">
         <div className="flex items-center gap-3">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => window.history.length > 1 ? navigate(-1) : navigate("/store")}
             className="h-10 w-10 flex items-center justify-center"
           >
             <img src={backArrow} alt="Back" className="h-8 w-8 object-contain" />

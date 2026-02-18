@@ -1,28 +1,51 @@
 import { useRef, useEffect, useState, useCallback } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import katanaImg from "@/assets/katana.png";
 
-const testimonials = [
-  { name: "Amelia Li", company: "Quantum Ware", role: "Co-Founder & CEO", avatar: "https://i.pravatar.cc/80?img=1", quote: "The Pro Click R2 completely changed my workflow. The haptic feedback is unlike anything I've used before — it's precise, responsive, and addictive." },
-  { name: "Ethan Anderson", company: "Nexus Labs", role: "Operations Manager", avatar: "https://i.pravatar.cc/80?img=3", quote: "Rebel Head's build quality is insane. The gasket-mounted keyboard feels premium and the sound profile is chef's kiss. Worth every rupee." },
-  { name: "Natasha Hiren", company: "Velocity Inc", role: "Product Designer", avatar: "https://i.pravatar.cc/80?img=5", quote: "I've tried every gaming mouse on the market. The PixArt 9832 sensor in the R2 tracks flawlessly — zero smoothing, zero acceleration. Pure precision." },
-  { name: "Aria Rodriguez", company: "Orbit Systems", role: "Lead Developer", avatar: "https://i.pravatar.cc/80?img=9", quote: "The sakura edition prints are gorgeous. Finally a gaming brand that understands aesthetics aren't just RGB rainbows. Japanese design done right." },
-  { name: "Kenji Tanaka", company: "Sakura Studios", role: "Creative Director", avatar: "https://i.pravatar.cc/80?img=11", quote: "The Rebel Pad Pro's gyroscope is a game changer for aim-assisted shooters. Hall Effect triggers seal the deal. The design philosophy is incredible." },
-  { name: "Sofia Chen", company: "Dragon Gate", role: "Esports Coach", avatar: "https://i.pravatar.cc/80?img=16", quote: "Our entire team switched to Rebel peripherals last season. The 8K polling rate on the mouse gives a tangible competitive edge at the pro level." },
-  { name: "Marcus Webb", company: "Pixel Forge", role: "Game Designer", avatar: "https://i.pravatar.cc/80?img=12", quote: "The Rebel Head Pro headset's spatial audio is unreal. I can pinpoint footsteps in Valorant with surgical accuracy. 60-hour battery is just overkill." },
-  { name: "Yuki Sato", company: "Kaze Tech", role: "Hardware Engineer", avatar: "https://i.pravatar.cc/80?img=15", quote: "No compromise on quality. As an engineer, I appreciate the internal design. Clean PCB layout, quality components, and the haptic motor integration is clever." },
-  { name: "Priya Sharma", company: "Nova Gaming", role: "Pro Player", avatar: "https://i.pravatar.cc/80?img=20", quote: "Switched from Logitech to Rebel Click Pro mid-tournament. My reaction time improved noticeably. The 52g weight makes flick shots effortless." },
-  { name: "James O'Neill", company: "Thunder Esports", role: "Team Captain", avatar: "https://i.pravatar.cc/80?img=33", quote: "Rebel Head isn't just a peripheral brand — it's a statement. The Japanese-inspired design language sets them apart from everything else in the market." },
-  { name: "Mei Lin", company: "Blossom Interactive", role: "UX Lead", avatar: "https://i.pravatar.cc/80?img=25", quote: "The keyboard's PBT keycaps feel incredible. Dye-sub legends are crisp even after months of daily use. Hot-swap makes switch testing a breeze." },
-  { name: "Ravi Patel", company: "Apex Arena", role: "Streamer", avatar: "https://i.pravatar.cc/80?img=52", quote: "My viewers always ask about my setup. The sakura mouse and dark keyboard combo looks stunning on camera. Rebel Head just gets aesthetics." },
-  { name: "Hana Kimura", company: "Ronin Labs", role: "Sound Engineer", avatar: "https://i.pravatar.cc/80?img=44", quote: "The sound quality is phenomenal. The planar magnetic drivers in the headset deliver audiophile-grade sound. LDAC codec support is rare at this price point." },
-  { name: "Alex Turner", company: "Grid Gaming", role: "Content Creator", avatar: "https://i.pravatar.cc/80?img=53", quote: "Rebel's tri-mode connectivity is seamless. I switch between my PC, Switch, and phone without missing a beat. The gamepad just works everywhere." },
-  { name: "Sakura Ito", company: "Neon Drift", role: "Art Director", avatar: "https://i.pravatar.cc/80?img=47", quote: "Every product feels like a piece of art. The attention to detail in the packaging alone tells you this brand cares. A perfect embodiment of design spirit." },
+const fallbackTestimonials = [
+  { author_name: "Amelia Li", author_title: "Co-Founder & CEO, Quantum Ware", author_avatar: "https://i.pravatar.cc/80?img=1", content: "The Pro Click R2 completely changed my workflow. The haptic feedback is unlike anything I've used before — it's precise, responsive, and addictive." },
+  { author_name: "Ethan Anderson", author_title: "Operations Manager, Nexus Labs", author_avatar: "https://i.pravatar.cc/80?img=3", content: "Rebel Head's build quality is insane. The gasket-mounted keyboard feels premium and the sound profile is chef's kiss. Worth every rupee." },
+  { author_name: "Natasha Hiren", author_title: "Product Designer, Velocity Inc", author_avatar: "https://i.pravatar.cc/80?img=5", content: "I've tried every gaming mouse on the market. The PixArt 9832 sensor in the R2 tracks flawlessly — zero smoothing, zero acceleration. Pure precision." },
+  { author_name: "Aria Rodriguez", author_title: "Lead Developer, Orbit Systems", author_avatar: "https://i.pravatar.cc/80?img=9", content: "The sakura edition prints are gorgeous. Finally a gaming brand that understands aesthetics aren't just RGB rainbows. Japanese design done right." },
+  { author_name: "Kenji Tanaka", author_title: "Creative Director, Sakura Studios", author_avatar: "https://i.pravatar.cc/80?img=11", content: "The Rebel Pad Pro's gyroscope is a game changer for aim-assisted shooters. Hall Effect triggers seal the deal. The design philosophy is incredible." },
+  { author_name: "Sofia Chen", author_title: "Esports Coach, Dragon Gate", author_avatar: "https://i.pravatar.cc/80?img=16", content: "Our entire team switched to Rebel peripherals last season. The 8K polling rate on the mouse gives a tangible competitive edge at the pro level." },
+  { author_name: "Marcus Webb", author_title: "Game Designer, Pixel Forge", author_avatar: "https://i.pravatar.cc/80?img=12", content: "The Rebel Head Pro headset's spatial audio is unreal. I can pinpoint footsteps in Valorant with surgical accuracy. 60-hour battery is just overkill." },
+  { author_name: "Yuki Sato", author_title: "Hardware Engineer, Kaze Tech", author_avatar: "https://i.pravatar.cc/80?img=15", content: "No compromise on quality. As an engineer, I appreciate the internal design. Clean PCB layout, quality components, and the haptic motor integration is clever." },
+  { author_name: "Priya Sharma", author_title: "Pro Player, Nova Gaming", author_avatar: "https://i.pravatar.cc/80?img=20", content: "Switched from Logitech to Rebel Click Pro mid-tournament. My reaction time improved noticeably. The 52g weight makes flick shots effortless." },
+  { author_name: "James O'Neill", author_title: "Team Captain, Thunder Esports", author_avatar: "https://i.pravatar.cc/80?img=33", content: "Rebel Head isn't just a peripheral brand — it's a statement. The Japanese-inspired design language sets them apart from everything else in the market." },
+  { author_name: "Mei Lin", author_title: "UX Lead, Blossom Interactive", author_avatar: "https://i.pravatar.cc/80?img=25", content: "The keyboard's PBT keycaps feel incredible. Dye-sub legends are crisp even after months of daily use. Hot-swap makes switch testing a breeze." },
+  { author_name: "Ravi Patel", author_title: "Streamer, Apex Arena", author_avatar: "https://i.pravatar.cc/80?img=52", content: "My viewers always ask about my setup. The sakura mouse and dark keyboard combo looks stunning on camera. Rebel Head just gets aesthetics." },
+  { author_name: "Hana Kimura", author_title: "Sound Engineer, Ronin Labs", author_avatar: "https://i.pravatar.cc/80?img=44", content: "The sound quality is phenomenal. The planar magnetic drivers in the headset deliver audiophile-grade sound. LDAC codec support is rare at this price point." },
+  { author_name: "Alex Turner", author_title: "Content Creator, Grid Gaming", author_avatar: "https://i.pravatar.cc/80?img=53", content: "Rebel's tri-mode connectivity is seamless. I switch between my PC, Switch, and phone without missing a beat. The gamepad just works everywhere." },
+  { author_name: "Sakura Ito", author_title: "Art Director, Neon Drift", author_avatar: "https://i.pravatar.cc/80?img=47", content: "Every product feels like a piece of art. The attention to detail in the packaging alone tells you this brand cares. A perfect embodiment of design spirit." },
 ];
+
+type TestimonialData = {
+  author_name: string;
+  author_title: string | null;
+  author_avatar: string | null;
+  content: string;
+};
 
 const TestimonialSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrolledToEnd, setScrolledToEnd] = useState(false);
   const [centerProgress, setCenterProgress] = useState(0);
+  const [testimonials, setTestimonials] = useState<TestimonialData[]>(fallbackTestimonials);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      const { data } = await supabase
+        .from("testimonials")
+        .select("author_name, author_title, author_avatar, content")
+        .eq("is_active", true)
+        .order("sort_order");
+      if (data && data.length > 0) {
+        setTestimonials(data);
+      }
+    };
+    fetchTestimonials();
+  }, []);
 
   const handleInnerScroll = useCallback(() => {
     const el = scrollRef.current;
@@ -96,21 +119,22 @@ const TestimonialSection = () => {
                 className="rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm p-6 flex flex-col gap-4"
               >
                 <div className="flex items-center gap-3">
-                  <img
-                    src={t.avatar}
-                    alt={t.name}
-                    className="w-10 h-10 rounded-full object-cover border-2 border-white/20"
-                  />
+                  {t.author_avatar && (
+                    <img
+                      src={t.author_avatar}
+                      alt={t.author_name}
+                      className="w-10 h-10 rounded-full object-cover border-2 border-white/20"
+                    />
+                  )}
                   <div>
-                    <p className="text-red-400 text-[10px] font-medium tracking-wider uppercase">
-                      {t.company}
-                    </p>
-                    <p className="text-white text-sm font-semibold">{t.name}</p>
-                    <p className="text-white/40 text-xs">{t.role}</p>
+                    <p className="text-white text-sm font-semibold">{t.author_name}</p>
+                    {t.author_title && (
+                      <p className="text-white/40 text-xs">{t.author_title}</p>
+                    )}
                   </div>
                 </div>
                 <p className="text-white/60 text-sm leading-relaxed">
-                  "{t.quote}"
+                  "{t.content}"
                 </p>
               </div>
             ))}

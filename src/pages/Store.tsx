@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import MenuButton from "@/components/MenuButton";
 import CartButton from "@/components/CartButton";
 import AccountButton from "@/components/AccountButton";
 import ShopNowButton from "@/components/ShopNowButton";
 import FooterSection from "@/components/FooterSection";
 import logo from "@/assets/Frame_5.png";
+
+// Fallback images for products that use local assets
 import mouseImg from "@/assets/mouse.png";
 import keyboardImg from "@/assets/keyboard-store.png";
 import gamepadImg from "@/assets/gamepad.png";
@@ -17,23 +20,74 @@ import accessoriesImg from "@/assets/accessories-flatlay.png";
 import numpadImg from "@/assets/numpad.png";
 import webcamImg from "@/assets/webcam.png";
 
+const localImageMap: Record<string, string> = {
+  "/assets/mouse.png": mouseImg,
+  "/assets/keyboard-store.png": keyboardImg,
+  "/assets/gamepad.png": gamepadImg,
+  "/assets/headphones.png": headphonesImg,
+  "/assets/speaker.png": speakerImg,
+  "/assets/charger.png": chargerImg,
+  "/assets/accessories-flatlay.png": accessoriesImg,
+  "/assets/numpad.png": numpadImg,
+  "/assets/webcam.png": webcamImg,
+};
+
+const sectionLinkMap: Record<string, string> = {
+  mice: "/product/mouse",
+  keyboards: "/product/keyboard",
+  gamepads: "/product/gamepad",
+  headphones: "/product/headphone",
+};
+
+// Grid class patterns for visual variety
+const gridClasses = [
+  "col-span-1 row-span-1",
+  "col-span-1 row-span-2",
+  "col-span-1 row-span-1",
+  "col-span-2 row-span-1",
+  "col-span-1 row-span-1",
+  "col-span-1 row-span-2",
+  "col-span-1 row-span-1",
+  "col-span-2 row-span-1",
+  "col-span-1 row-span-1",
+];
+
 const categories = ["New", "Keyboard", "Printed Mouse", "Headphone Stand", "Gamepad"];
 
-const products = [
-  { id: 1, img: mouseImg, name: "Rebel Head Pro Click R2", price: "INR 3500.93", className: "col-span-1 row-span-1", link: "/product/mouse" },
-  { id: 2, img: keyboardImg, name: "Rebel Head Mech K1", price: "INR 5999.00", className: "col-span-1 row-span-2", link: "/product/keyboard" },
-  { id: 3, img: gamepadImg, name: "Rebel Head Gyro Pad", price: "INR 4299.00", className: "col-span-1 row-span-1", link: "/product/gamepad" },
-  { id: 4, img: headphonesImg, name: "Rebel Head Audio X", price: "INR 2999.00", className: "col-span-2 row-span-1", link: "/product/headphone" },
-  { id: 5, img: speakerImg, name: "Rebel Head Boom S1", price: "INR 1899.00", className: "col-span-1 row-span-1" },
-  { id: 6, img: chargerImg, name: "Rebel Head Power Hub", price: "INR 1499.00", className: "col-span-1 row-span-2" },
-  { id: 7, img: accessoriesImg, name: "Rebel Head Essentials Kit", price: "INR 2499.00", className: "col-span-1 row-span-1" },
-  { id: 8, img: numpadImg, name: "Rebel Head Num Pad N1", price: "INR 1799.00", className: "col-span-2 row-span-1" },
-  { id: 9, img: webcamImg, name: "Rebel Head Cam Pro", price: "INR 3299.00", className: "col-span-1 row-span-1" },
-];
+interface DBProduct {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  stock: number;
+  section: string | null;
+  image_url: string | null;
+  is_active: boolean;
+}
 
 const Store = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("New");
+  const [products, setProducts] = useState<DBProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data } = await supabase
+        .from("products")
+        .select("id, name, description, price, stock, section, image_url, is_active")
+        .eq("is_active", true)
+        .order("created_at", { ascending: true });
+      if (data) setProducts(data);
+      setLoading(false);
+    };
+    fetchProducts();
+  }, []);
+
+  const resolveImage = (url: string | null) => {
+    if (!url) return mouseImg;
+    return localImageMap[url] || url;
+  };
 
   return (
     <div className="min-h-screen bg-black text-white relative">
@@ -106,31 +160,40 @@ const Store = () => {
 
       {/* Product Grid */}
       <div className="px-6 md:px-10 pb-16">
-        <div className="grid grid-cols-3 auto-rows-[220px] md:auto-rows-[280px] gap-3">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              onClick={() => product.link ? navigate(product.link) : undefined}
-              className={`${product.className} rounded-2xl overflow-hidden cursor-pointer group relative bg-neutral-900`}
-            >
-              <img
-                src={product.img}
-                alt={product.name}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                <div>
-                  <p className="text-white text-sm font-medium leading-tight">{product.name}</p>
-                  <p className="text-red-400 text-sm font-semibold mt-1">{product.price}</p>
+        {loading ? (
+          <p className="text-white/40">Loading products...</p>
+        ) : products.length === 0 ? (
+          <p className="text-white/40">No products available.</p>
+        ) : (
+          <div className="grid grid-cols-3 auto-rows-[220px] md:auto-rows-[280px] gap-3">
+            {products.map((product, idx) => {
+              const link = product.section ? sectionLinkMap[product.section] : undefined;
+              return (
+                <div
+                  key={product.id}
+                  onClick={() => link ? navigate(link) : undefined}
+                  className={`${gridClasses[idx % gridClasses.length]} rounded-2xl overflow-hidden cursor-pointer group relative bg-neutral-900`}
+                >
+                  <img
+                    src={resolveImage(product.image_url)}
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                    <div>
+                      <p className="text-white text-sm font-medium leading-tight">{product.name}</p>
+                      <p className="text-red-400 text-sm font-semibold mt-1">INR {product.price.toFixed(2)}</p>
+                    </div>
+                    <button className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-white/20 bg-white/10 backdrop-blur-sm text-white text-xs whitespace-nowrap hover:bg-white/20 transition-colors">
+                      View Product <span className="text-sm">↗</span>
+                    </button>
+                  </div>
                 </div>
-                <button className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-white/20 bg-white/10 backdrop-blur-sm text-white text-xs whitespace-nowrap hover:bg-white/20 transition-colors">
-                  View Product <span className="text-sm">↗</span>
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Footer */}

@@ -56,7 +56,12 @@ const Discover = () => {
     : products;
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white relative">
+      {/* Decorative kanji watermarks */}
+      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+        <span className="absolute top-[12%] left-[4%] text-red-500/[0.03] text-[20rem] font-jp leading-none">探</span>
+        <span className="absolute bottom-[15%] right-[5%] text-red-500/[0.025] text-[12rem] font-jp leading-none">魂</span>
+      </div>
       {/* Top Nav */}
       <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-4">
         <img

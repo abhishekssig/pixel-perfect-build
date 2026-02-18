@@ -24,6 +24,8 @@ const MenuButton = ({ className = "" }: MenuButtonProps) => {
     { label: "Store", path: "/store" },
     { label: "Blog", path: "/blog" },
     { label: "Support", path: "/support" },
+    { label: "Drivers", path: "/drivers" },
+    { label: "Events", path: "/events" },
   ];
 
   return (

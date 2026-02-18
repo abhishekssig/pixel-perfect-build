@@ -130,11 +130,11 @@ const Store = () => {
               </div>
             </div>
           ))}
+        </div>
       </div>
 
       {/* Footer */}
       <FooterSection />
-    </div>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MenuButton from "@/components/MenuButton";
 import controllerBlack from "@/assets/controller-black.png";
 import controllerWhite from "@/assets/controller-white.png";
 
@@ -38,10 +39,7 @@ const GyroSection = () => {
       {/* Top nav */}
       <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-6 md:px-10 py-5">
         <div />
-        <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm text-white text-sm tracking-wide">
-          <span className="text-base">☰</span>
-          <span>MENU</span>
-        </button>
+        <MenuButton className="border-white/30 bg-white/10" />
         <button onClick={() => navigate("/signup")} className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm text-white text-sm tracking-wide">
           <span className="text-base">👤</span>
           <span>Account</span>

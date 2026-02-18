@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import MenuButton from "@/components/MenuButton";
 import logo from "@/assets/Frame_4.png";
 
 const HeroSection = () => {
@@ -51,10 +52,7 @@ const HeroSection = () => {
           style={{ opacity: stage === 1 ? 1 : 0 }}
         >
           <div />
-          <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm text-white text-sm tracking-wide">
-            <span className="text-base">☰</span>
-            <span>MENU</span>
-          </button>
+          <MenuButton className="border-white/30 bg-white/10" />
           <button onClick={() => navigate("/signup")} className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm text-white text-sm tracking-wide">
             <span className="text-base">👤</span>
             <span>Account</span>

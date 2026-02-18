@@ -33,7 +33,7 @@ const Support = () => {
 
   const renderSubView = () => {
     if (view === "orders") return (
-      <div className="px-6 md:px-10 py-12 max-w-4xl mx-auto">
+      <div className="px-6 md:px-10 pt-24 pb-12 max-w-4xl mx-auto">
         <button onClick={() => setView("main")} className="flex items-center gap-2 text-white/60 hover:text-white mb-8 transition-colors">
           <ArrowLeft className="w-5 h-5" /> Back
         </button>
@@ -51,7 +51,7 @@ const Support = () => {
     );
 
     if (view === "warranty") return (
-      <div className="px-6 md:px-10 py-12 max-w-4xl mx-auto">
+      <div className="px-6 md:px-10 pt-24 pb-12 max-w-4xl mx-auto">
         <button onClick={() => setView("main")} className="flex items-center gap-2 text-white/60 hover:text-white mb-8 transition-colors">
           <ArrowLeft className="w-5 h-5" /> Back
         </button>
@@ -72,7 +72,7 @@ const Support = () => {
     );
 
     if (view === "contact") return (
-      <div className="px-6 md:px-10 py-12 max-w-2xl mx-auto">
+      <div className="px-6 md:px-10 pt-24 pb-12 max-w-2xl mx-auto">
         <button onClick={() => setView("main")} className="flex items-center gap-2 text-white/60 hover:text-white mb-8 transition-colors">
           <ArrowLeft className="w-5 h-5" /> Back
         </button>
@@ -87,7 +87,7 @@ const Support = () => {
     );
 
     if (view === "manual") return (
-      <div className="px-6 md:px-10 py-12 max-w-2xl mx-auto">
+      <div className="px-6 md:px-10 pt-24 pb-12 max-w-2xl mx-auto">
         <button onClick={() => setView("main")} className="flex items-center gap-2 text-white/60 hover:text-white mb-8 transition-colors">
           <ArrowLeft className="w-5 h-5" /> Back
         </button>

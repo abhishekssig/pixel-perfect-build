@@ -26,16 +26,16 @@ const footerLinks = [
     title: "SUPPORT",
     links: [
       { label: "Help Center", path: "/support" },
-      { label: "Terms", path: "#" },
-      { label: "Privacy", path: "#" },
-      { label: "Security", path: "#" },
+      { label: "Terms", path: "/terms" },
+      { label: "Privacy", path: "/terms" },
+      { label: "Drivers", path: "/drivers" },
     ],
   },
   {
     title: "COMUNITY",
     links: [
       { label: "Forum", path: "#" },
-      { label: "Event", path: "#" },
+      { label: "Events", path: "/events" },
       { label: "Partners", path: "#" },
       { label: "Affiliates", path: "#" },
       { label: "Career", path: "#" },
@@ -45,9 +45,9 @@ const footerLinks = [
     title: "PRESS",
     links: [
       { label: "Press Releases", path: "/blog" },
-      { label: "Terms Of Use", path: "#" },
-      { label: "Privacy Policy", path: "#" },
-      { label: "Cookie Policy", path: "#" },
+      { label: "Terms Of Use", path: "/terms" },
+      { label: "Privacy Policy", path: "/terms" },
+      { label: "Cookie Policy", path: "/terms" },
       { label: "Legal", path: "#" },
     ],
   },

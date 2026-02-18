@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import MenuButton from "@/components/MenuButton";
 import logo from "@/assets/Frame_5.png";
 import mouseHero from "@/assets/mouse-hero.png";
+import backArrow from "@/assets/back-arrow.png";
 
 const VARIANTS = [
   { id: 1, color: "#1a1a1a" },
@@ -50,13 +51,21 @@ const ProductMouse = () => {
     <div className="min-h-[600vh] bg-[#1a1a1a] text-white">
       {/* Top Nav */}
       <div className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-6 md:px-10 py-4">
-        <img
-          src={logo}
-          alt="Rebel Head"
-          className="h-10 w-auto cursor-pointer"
-          onClick={() => navigate("/")}
-          style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.4)) drop-shadow(0 0 20px rgba(255,255,255,0.15))" }}
-        />
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate(-1)}
+            className="h-10 w-10 flex items-center justify-center"
+          >
+            <img src={backArrow} alt="Back" className="h-8 w-8 object-contain" />
+          </button>
+          <img
+            src={logo}
+            alt="Rebel Head"
+            className="h-10 w-auto cursor-pointer"
+            onClick={() => navigate("/")}
+            style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.4)) drop-shadow(0 0 20px rgba(255,255,255,0.15))" }}
+          />
+        </div>
         <MenuButton />
         <button
           onClick={() => navigate("/signup")}

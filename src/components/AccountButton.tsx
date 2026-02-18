@@ -8,7 +8,9 @@ interface AccountButtonProps {
 
 const AccountButton = ({ className = "" }: AccountButtonProps) => {
   const navigate = useNavigate();
-  const { isLoggedIn, user } = useAuth();
+  const { isLoggedIn, user, loading } = useAuth();
+
+  if (loading) return null;
 
   if (isLoggedIn && user) {
     return (

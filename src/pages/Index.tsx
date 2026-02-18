@@ -3,6 +3,7 @@ import SplashScreen from "@/components/SplashScreen";
 import HeroSection from "@/components/HeroSection";
 import ShowcaseSection from "@/components/ShowcaseSection";
 import KeyboardSection from "@/components/KeyboardSection";
+import MouseSection from "@/components/MouseSection";
 import TestimonialSection from "@/components/TestimonialSection";
 import FooterSection from "@/components/FooterSection";
 import ShopNowButton from "@/components/ShopNowButton";
@@ -25,6 +26,7 @@ const Index = () => {
       <HeroSection />
       <ShowcaseSection />
       <KeyboardSection />
+      <MouseSection />
       <TestimonialSection />
       <FooterSection overlap />
     </>

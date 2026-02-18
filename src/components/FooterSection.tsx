@@ -58,7 +58,7 @@ const FooterSection = ({ overlap = false }: FooterSectionProps) => {
   return (
     <footer className="relative z-30">
       {/* Gradient fade from transparent to black */}
-      <div className="h-40 bg-gradient-to-b from-black to-black pointer-events-none" />
+      <div className="h-10 bg-black pointer-events-none" />
 
       {/* Content area with video background */}
       <div className="relative overflow-hidden">

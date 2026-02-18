@@ -17,7 +17,7 @@ const Index = () => {
       <ShowcaseSection />
       <KeyboardSection />
       <TestimonialSection />
-      <FooterSection />
+      <FooterSection overlap />
     </>
   );
 };

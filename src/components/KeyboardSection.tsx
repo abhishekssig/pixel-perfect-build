@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MenuButton from "@/components/MenuButton";
 import keyboardDark from "@/assets/keyboard-dark.png";
 
 const KeyboardSection = () => {
@@ -103,10 +104,7 @@ const KeyboardSection = () => {
             style={{ opacity: overlayOpacity }}
           >
             <div />
-            <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-black/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide">
-              <span className="text-base">☰</span>
-              <span>MENU</span>
-            </button>
+            <MenuButton />
             <button
               onClick={() => navigate("/signup")}
               className="flex items-center gap-2 px-4 py-2 rounded-full border border-black/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide"

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
+import MenuButton from "@/components/MenuButton";
 import FooterSection from "@/components/FooterSection";
 import logo from "@/assets/Frame_5.png";
 import mouseImg from "@/assets/mouse.png";
@@ -42,10 +43,7 @@ const Store = () => {
           onClick={() => navigate("/")}
           style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.4)) drop-shadow(0 0 20px rgba(255,255,255,0.15))" }}
         />
-        <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide">
-          <span className="text-base">☰</span>
-          <span>MENU</span>
-        </button>
+        <MenuButton />
         <button
           onClick={() => navigate("/signup")}
           className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide"

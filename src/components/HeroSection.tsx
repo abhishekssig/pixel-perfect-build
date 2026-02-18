@@ -49,6 +49,12 @@ const HeroSection = () => {
           style={{ opacity: stage === 0 ? 0 : stage === 1 ? 0.55 : 0.8 }}
         />
 
+        {/* Decorative kanji watermarks */}
+        <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-[1]">
+          <span className="absolute top-[15%] right-[8%] text-red-500/[0.04] text-[12rem] font-jp leading-none">反</span>
+          <span className="absolute bottom-[20%] left-[5%] text-red-500/[0.03] text-[18rem] font-jp leading-none">逆</span>
+        </div>
+
         {/* Top navigation bar - menu only, right-side buttons handled by Index */}
         <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-center px-6 md:px-10 py-5">
           <div

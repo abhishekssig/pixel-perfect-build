@@ -36,7 +36,12 @@ const Store = () => {
   const [activeCategory, setActiveCategory] = useState("New");
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white relative">
+      {/* Decorative kanji watermarks */}
+      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+        <span className="absolute top-[10%] right-[3%] text-red-500/[0.03] text-[16rem] font-jp leading-none">武</span>
+        <span className="absolute top-[55%] left-[2%] text-red-500/[0.025] text-[14rem] font-jp leading-none">器</span>
+      </div>
       {/* Top Nav */}
       <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-4">
         <img

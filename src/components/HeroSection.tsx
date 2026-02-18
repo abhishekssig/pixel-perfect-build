@@ -49,12 +49,14 @@ const HeroSection = () => {
         />
 
         {/* Top navigation bar */}
-        <div
-          className="relative z-10 flex items-center justify-between px-6 md:px-10 py-5 transition-opacity duration-700"
-          style={{ opacity: stage === 1 ? 1 : 0 }}
-        >
+        <div className="relative z-10 flex items-center justify-between px-6 md:px-10 py-5">
           <div />
-          <MenuButton className="border-white/30 bg-white/10" />
+          <div
+            className="transition-opacity duration-700"
+            style={{ opacity: stage === 1 ? 1 : 0, pointerEvents: stage === 1 ? "auto" : "none" }}
+          >
+            <MenuButton className="border-white/30 bg-white/10" />
+          </div>
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate("/store")}
@@ -62,8 +64,13 @@ const HeroSection = () => {
             >
               Shop Now
             </button>
-            <CartButton className="border-white/30 bg-white/10" />
-            <AccountButton className="border-white/30 bg-white/10" />
+            <div
+              className="flex items-center gap-3 transition-opacity duration-700"
+              style={{ opacity: stage === 1 ? 1 : 0, pointerEvents: stage === 1 ? "auto" : "none" }}
+            >
+              <CartButton className="border-white/30 bg-white/10" />
+              <AccountButton className="border-white/30 bg-white/10" />
+            </div>
           </div>
         </div>
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, ShieldCheck, Headphones, Package, Download, ArrowLeft, Mouse, Gamepad2, Headphones as HeadphoneIcon, Keyboard } from "lucide-react";
 import MenuButton from "@/components/MenuButton";
+import CartButton from "@/components/CartButton";
 import FooterSection from "@/components/FooterSection";
 import logo from "@/assets/Frame_5.png";
 
@@ -119,13 +120,16 @@ const Support = () => {
           style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.4)) drop-shadow(0 0 20px rgba(255,255,255,0.15))" }}
         />
         <MenuButton />
-        <button
-          onClick={() => navigate("/signup")}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide"
-        >
-          <span className="text-base">👤</span>
-          <span>Account</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <CartButton />
+          <button
+            onClick={() => navigate("/signup")}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide"
+          >
+            <span className="text-base">👤</span>
+            <span>Account</span>
+          </button>
+        </div>
       </div>
 
       {view === "main" ? (

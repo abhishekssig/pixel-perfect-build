@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "@/contexts/CartContext";
 import MenuButton from "@/components/MenuButton";
+import CartButton from "@/components/CartButton";
 import logo from "@/assets/Frame_5.png";
 import mouseHero from "@/assets/mouse-hero.png";
 import backArrow from "@/assets/back-arrow.png";
@@ -25,6 +27,7 @@ const FEATURES = [
 
 const ProductMouse = () => {
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState(1);
 
@@ -67,13 +70,16 @@ const ProductMouse = () => {
           />
         </div>
         <MenuButton />
-        <button
-          onClick={() => navigate("/signup")}
-          className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide"
-        >
-          <span className="text-base">👤</span>
-          <span>Account</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <CartButton />
+          <button
+            onClick={() => navigate("/signup")}
+            className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide"
+          >
+            <span className="text-base">👤</span>
+            <span>Account</span>
+          </button>
+        </div>
       </div>
 
       {/* Hero Section - sticky */}
@@ -130,7 +136,10 @@ const ProductMouse = () => {
           >
             <p className="text-red-500/80 text-xs uppercase tracking-widest mb-1">In Stock</p>
             <p className="text-2xl md:text-3xl font-light mb-4">INR 3500.93</p>
-            <button className="flex items-center gap-3 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-white text-sm tracking-wide hover:bg-white/10 transition-colors">
+            <button
+              onClick={() => addToCart({ id: 101, name: "Rebel Head Pro Click R2", price: 3500.93, img: mouseHero })}
+              className="flex items-center gap-3 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-white text-sm tracking-wide hover:bg-white/10 transition-colors"
+            >
               <span>Add to Cart</span>
               <span className="text-lg">🛒</span>
             </button>

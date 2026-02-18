@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
 import MenuButton from "@/components/MenuButton";
+import CartButton from "@/components/CartButton";
 import FooterSection from "@/components/FooterSection";
 import logo from "@/assets/Frame_5.png";
 import mouseImg from "@/assets/mouse.png";
@@ -44,6 +46,7 @@ const products = [
 
 const Discover = () => {
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   const filteredProducts = activeCategory
@@ -62,13 +65,16 @@ const Discover = () => {
           style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.4)) drop-shadow(0 0 20px rgba(255,255,255,0.15))" }}
         />
         <MenuButton />
-        <button
-          onClick={() => navigate("/signup")}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide"
-        >
-          <span className="text-base">👤</span>
-          <span>Account</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <CartButton />
+          <button
+            onClick={() => navigate("/signup")}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide"
+          >
+            <span className="text-base">👤</span>
+            <span>Account</span>
+          </button>
+        </div>
       </div>
 
       {/* Category Icons */}
@@ -166,7 +172,11 @@ const Discover = () => {
                   <span className="text-red-500 text-sm font-semibold">{product.price}</span>
                   <button
                     className="px-5 py-1.5 rounded-md border border-white/20 text-white text-xs font-medium tracking-wider hover:bg-white/10 transition-colors"
-                    onClick={(e) => { e.stopPropagation(); }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const priceNum = parseFloat(product.price.replace("INR ", "").replace(",", ""));
+                      addToCart({ id: product.id, name: product.name, price: priceNum, img: product.img });
+                    }}
                   >
                     BUY
                   </button>

@@ -58,8 +58,8 @@ const Store = () => {
       <div className="pt-24 px-6 md:px-10">
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-light leading-tight mb-8">
           <span className="font-semibold">Store.</span>{" "}
-          <span className="text-white/50 italic font-jp">
-            最高の製品を手に入れよう
+          <span className="text-white/50 italic">
+            Get the best gear for your setup.
           </span>
         </h1>
 

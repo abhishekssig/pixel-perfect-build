@@ -110,11 +110,11 @@ const Discover = () => {
       <div className="px-6 md:px-10 mt-4">
         <div className="flex items-start justify-between gap-8 mb-10">
           <div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-white/40 leading-tight tracking-tight font-jp">
-              ゲーマーのための装備を発見
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight tracking-tight">
+              Discover Gear For Gamers
             </h1>
             <p className="text-white/30 text-sm mt-2">
-              Discover Gear For Gamers — Mice, Keyboards, Headsets & More
+              Mice, Keyboards, Headsets & More
             </p>
           </div>
           <div className="flex items-center gap-2 mt-2 shrink-0">

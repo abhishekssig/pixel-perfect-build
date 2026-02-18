@@ -190,8 +190,8 @@ const Blog = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
             <div>
               <h2 className="text-2xl md:text-4xl font-light leading-tight font-jp">
-                <span className="font-semibold">ブログ</span>{" "}
-                <span className="text-white/40 italic">News, Insights & Press Releases</span>
+              <span className="font-semibold">Blog.</span>{" "}
+              <span className="text-white/40 italic">News, Insights & Press Releases</span>
               </h2>
             </div>
             <div className="relative shrink-0">

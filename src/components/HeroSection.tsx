@@ -49,23 +49,13 @@ const HeroSection = () => {
           style={{ opacity: stage === 0 ? 0 : stage === 1 ? 0.55 : 0.8 }}
         />
 
-        {/* Top navigation bar - always visible */}
-        <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 md:px-10 py-5">
-          <div />
+        {/* Top navigation bar - menu only, right-side buttons handled by Index */}
+        <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-center px-6 md:px-10 py-5">
           <div
             className="transition-opacity duration-700"
             style={{ opacity: stage === 1 ? 1 : 0, pointerEvents: stage === 1 ? "auto" : "none" }}
           >
             <MenuButton className="border-white/30 bg-white/10" />
-          </div>
-          <div className="flex items-center gap-3">
-            <div
-              className="flex items-center gap-3 transition-opacity duration-700"
-              style={{ opacity: stage === 1 ? 1 : 0, pointerEvents: stage === 1 ? "auto" : "none" }}
-            >
-              <CartButton className="border-white/30 bg-white/10" />
-              <AccountButton className="border-white/30 bg-white/10" />
-            </div>
           </div>
         </div>
 

@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface FooterSectionProps {
   overlap?: boolean;
@@ -14,23 +15,46 @@ const socials = [
 const footerLinks = [
   {
     title: "ABOUT US",
-    links: ["Pricing", "Contact", "FAQ", "Blog"],
+    links: [
+      { label: "Pricing", path: "/store" },
+      { label: "Contact", path: "/support" },
+      { label: "FAQ", path: "/support" },
+      { label: "Blog", path: "/blog" },
+    ],
   },
   {
     title: "SUPPORT",
-    links: ["Help Center", "Terms", "Privacy", "Security"],
+    links: [
+      { label: "Help Center", path: "/support" },
+      { label: "Terms", path: "#" },
+      { label: "Privacy", path: "#" },
+      { label: "Security", path: "#" },
+    ],
   },
   {
     title: "COMUNITY",
-    links: ["Forum", "Event", "Partners", "Affiliates", "Career"],
+    links: [
+      { label: "Forum", path: "#" },
+      { label: "Event", path: "#" },
+      { label: "Partners", path: "#" },
+      { label: "Affiliates", path: "#" },
+      { label: "Career", path: "#" },
+    ],
   },
   {
     title: "PRESS",
-    links: ["Investors", "Terms Of Use", "Privacy Policy", "Cookie Policy", "Legal"],
+    links: [
+      { label: "Press Releases", path: "/blog" },
+      { label: "Terms Of Use", path: "#" },
+      { label: "Privacy Policy", path: "#" },
+      { label: "Cookie Policy", path: "#" },
+      { label: "Legal", path: "#" },
+    ],
   },
 ];
 
 const FooterSection = ({ overlap = false }: FooterSectionProps) => {
+  const navigate = useNavigate();
   return (
     <footer className={`relative z-30 ${overlap ? '-mt-[50vh]' : ''}`}>
       {/* Gradient fade from transparent to black */}
@@ -60,13 +84,13 @@ const FooterSection = ({ overlap = false }: FooterSectionProps) => {
               {col.title}
             </p>
             {col.links.map((link) => (
-              <a
-                key={link}
-                href="#"
-                className="text-white/70 text-sm hover:text-white transition-colors"
+              <button
+                key={link.label}
+                onClick={() => link.path !== "#" && navigate(link.path)}
+                className="text-white/70 text-sm hover:text-white transition-colors text-left"
               >
-                {link}
-              </a>
+                {link.label}
+              </button>
             ))}
           </div>
         ))}

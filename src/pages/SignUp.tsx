@@ -55,7 +55,7 @@ const SignUp = () => {
         </button>
 
         <div className="w-full max-w-md">
-          <h1 className="text-white text-3xl font-light italic mb-10 text-center">Sign Up</h1>
+          <h1 className="text-white text-3xl font-light italic mb-10 text-center font-jp">登録 · Sign Up</h1>
 
           <div className="space-y-6">
             <div>

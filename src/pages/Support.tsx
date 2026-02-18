@@ -132,8 +132,8 @@ const Support = () => {
       {view === "main" ? (
         <div className="pt-24 px-6 md:px-10">
           {/* Title */}
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-center italic text-white/80 mb-8">
-            Rebel Support
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-center italic text-white/80 mb-8 font-jp">
+            サポート · Rebel Support
           </h1>
 
           {/* Search */}

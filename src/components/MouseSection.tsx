@@ -90,16 +90,10 @@ const MouseSection = () => {
             zIndex: 2,
           }}
         >
-          {/* All images stacked, crossfade */}
+          {/* All images stacked, hard swap with subtle zoom */}
           {SLIDES.map((slide, i) => {
-            let opacity = 0;
-            if (i === slideIndex) {
-              opacity = i === SLIDES.length - 1 ? 1 : 1 - Math.max(0, slideLocalProgress - 0.6) / 0.4;
-            } else if (i === slideIndex + 1) {
-              opacity = Math.max(0, slideLocalProgress - 0.6) / 0.4;
-            }
-            // Scale effect for current image
-            const scale = i === slideIndex ? 1 + slideLocalProgress * 0.05 : 1;
+            const isActive = i === slideIndex;
+            const scale = isActive ? 1 + slideLocalProgress * 0.08 : 1.08;
 
             return (
               <img
@@ -108,9 +102,8 @@ const MouseSection = () => {
                 alt={slide.title}
                 className="absolute inset-0 w-full h-full object-contain"
                 style={{
-                  opacity,
+                  opacity: isActive ? 1 : 0,
                   transform: `scale(${scale})`,
-                  transition: "opacity 0.1s linear",
                   padding: "10%",
                 }}
               />

@@ -34,15 +34,15 @@ const categories = [
 const products = [
   { id: 1, img: mouseImg, name: "Rebel Click Pro R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93", link: "/product/mouse", category: "Mouse" },
   { id: 2, img: mouse2Img, name: "Rebel Click X1", desc: "Ergonomic wireless mouse with ultra-low latency", price: "INR 2999.00", link: "/product/mouse", category: "Mouse" },
-  { id: 3, img: gamepadImg, name: "Rebel Pad Pro", desc: "Wireless controller with hall effect triggers", price: "INR 4500.93", category: "Gamepad" },
-  { id: 4, img: gamepadImg, name: "Rebel Pad Lite", desc: "Compact gamepad for competitive gaming", price: "INR 3200.00", category: "Gamepad" },
-  { id: 5, img: keyboardDarkImg, name: "Rebel Keys Dark", desc: "Mechanical keyboard with custom switches", price: "INR 5500.93", category: "Keyboard" },
-  { id: 6, img: keyboardImg, name: "Rebel Keys RGB", desc: "Full-size mechanical keyboard with per-key RGB", price: "INR 4999.00", category: "Keyboard" },
+  { id: 3, img: gamepadImg, name: "Rebel Pad Pro", desc: "Wireless controller with hall effect triggers", price: "INR 4500.93", link: "/product/gamepad", category: "Gamepad" },
+  { id: 4, img: gamepadImg, name: "Rebel Pad Lite", desc: "Compact gamepad for competitive gaming", price: "INR 3200.00", link: "/product/gamepad", category: "Gamepad" },
+  { id: 5, img: keyboardDarkImg, name: "Rebel Keys Dark", desc: "Mechanical keyboard with custom switches", price: "INR 5500.93", link: "/product/keyboard", category: "Keyboard" },
+  { id: 6, img: keyboardImg, name: "Rebel Keys RGB", desc: "Full-size mechanical keyboard with per-key RGB", price: "INR 4999.00", link: "/product/keyboard", category: "Keyboard" },
   { id: 7, img: speakerImg, name: "Rebel Head Boom S1", desc: "Immersive surround sound bar for gaming", price: "INR 1899.00", category: "Sound Bar" },
   { id: 8, img: webcamImg, name: "Rebel Eye 4K", desc: "Ultra HD webcam with auto-focus and noise cancellation", price: "INR 2499.00", category: "Web Cam" },
   { id: 9, img: numpadImg, name: "Rebel Deck Mini", desc: "Programmable stream deck with LCD keys", price: "INR 3999.00", category: "Stream Deck" },
   { id: 10, img: chargerImg, name: "Rebel Power Hub", desc: "Multi-device wireless charging station", price: "INR 1499.00", category: "Charging Deck" },
-  { id: 11, img: headphonesImg, name: "Rebel Head Pro", desc: "Premium over-ear headset with spatial audio", price: "INR 3500.93", category: "Sound Bar" },
+  { id: 11, img: headphonesImg, name: "Rebel Head Pro", desc: "Premium over-ear headset with spatial audio", price: "INR 3500.93", link: "/product/headphone", category: "Sound Bar" },
   { id: 12, img: accessoriesImg, name: "Rebel Comfort Pad", desc: "Ergonomic seat cushion for extended sessions", price: "INR 999.00", category: "Seat Cushion" },
 ];
 
@@ -110,11 +110,11 @@ const Discover = () => {
       <div className="px-6 md:px-10 mt-4">
         <div className="flex items-start justify-between gap-8 mb-10">
           <div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-white/40 leading-tight tracking-tight">
-              Discover Gear For Gamers
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-white/40 leading-tight tracking-tight font-jp">
+              ゲーマーのための装備を発見
             </h1>
             <p className="text-white/30 text-sm mt-2">
-              Razer Mice, Keyboards, Headsets, Laptops & More
+              Discover Gear For Gamers — Mice, Keyboards, Headsets & More
             </p>
           </div>
           <div className="flex items-center gap-2 mt-2 shrink-0">

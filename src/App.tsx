@@ -15,6 +15,9 @@ import Store from "./pages/Store";
 import Discover from "./pages/Discover";
 import Support from "./pages/Support";
 import ProductMouse from "./pages/ProductMouse";
+import ProductKeyboard from "./pages/ProductKeyboard";
+import ProductGamepad from "./pages/ProductGamepad";
+import ProductHeadphone from "./pages/ProductHeadphone";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Account from "./pages/Account";
@@ -45,6 +48,9 @@ const App = () => (
               <Route path="/discover" element={<Discover />} />
               <Route path="/support" element={<Support />} />
               <Route path="/product/mouse" element={<ProductMouse />} />
+              <Route path="/product/keyboard" element={<ProductKeyboard />} />
+              <Route path="/product/gamepad" element={<ProductGamepad />} />
+              <Route path="/product/headphone" element={<ProductHeadphone />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/account" element={<Account />} />

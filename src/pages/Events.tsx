@@ -60,7 +60,7 @@ const Events = () => {
       </div>
 
       <div className="pt-24 px-6 md:px-10 max-w-5xl mx-auto pb-20">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-center italic text-white/80 mb-4">Events</h1>
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-center italic text-white/80 mb-4 font-jp">イベント · Events</h1>
         <p className="text-white/40 text-sm text-center mb-16 max-w-xl mx-auto">Meet the Rebel team, try our latest products, and join the community at events worldwide.</p>
 
         {/* Upcoming */}

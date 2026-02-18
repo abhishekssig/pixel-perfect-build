@@ -20,10 +20,10 @@ import webcamImg from "@/assets/webcam.png";
 const categories = ["New", "Keyboard", "Printed Mouse", "Headphone Stand", "Gamepad"];
 
 const products = [
-  { id: 1, img: mouseImg, name: "Rebel Head Pro Click R2", price: "INR 3500.93", className: "col-span-1 row-span-1" },
-  { id: 2, img: keyboardImg, name: "Rebel Head Mech K1", price: "INR 5999.00", className: "col-span-1 row-span-2" },
-  { id: 3, img: gamepadImg, name: "Rebel Head Gyro Pad", price: "INR 4299.00", className: "col-span-1 row-span-1" },
-  { id: 4, img: headphonesImg, name: "Rebel Head Audio X", price: "INR 2999.00", className: "col-span-2 row-span-1" },
+  { id: 1, img: mouseImg, name: "Rebel Head Pro Click R2", price: "INR 3500.93", className: "col-span-1 row-span-1", link: "/product/mouse" },
+  { id: 2, img: keyboardImg, name: "Rebel Head Mech K1", price: "INR 5999.00", className: "col-span-1 row-span-2", link: "/product/keyboard" },
+  { id: 3, img: gamepadImg, name: "Rebel Head Gyro Pad", price: "INR 4299.00", className: "col-span-1 row-span-1", link: "/product/gamepad" },
+  { id: 4, img: headphonesImg, name: "Rebel Head Audio X", price: "INR 2999.00", className: "col-span-2 row-span-1", link: "/product/headphone" },
   { id: 5, img: speakerImg, name: "Rebel Head Boom S1", price: "INR 1899.00", className: "col-span-1 row-span-1" },
   { id: 6, img: chargerImg, name: "Rebel Head Power Hub", price: "INR 1499.00", className: "col-span-1 row-span-2" },
   { id: 7, img: accessoriesImg, name: "Rebel Head Essentials Kit", price: "INR 2499.00", className: "col-span-1 row-span-1" },
@@ -58,10 +58,8 @@ const Store = () => {
       <div className="pt-24 px-6 md:px-10">
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-light leading-tight mb-8">
           <span className="font-semibold">Store.</span>{" "}
-          <span className="text-white/50 italic">
-            The Best Way To Buy The
-            <br />
-            Product You Love.
+          <span className="text-white/50 italic font-jp">
+            最高の製品を手に入れよう
           </span>
         </h1>
 
@@ -107,7 +105,7 @@ const Store = () => {
           {products.map((product) => (
             <div
               key={product.id}
-              onClick={() => product.id === 1 ? navigate("/product/mouse") : undefined}
+              onClick={() => product.link ? navigate(product.link) : undefined}
               className={`${product.className} rounded-2xl overflow-hidden cursor-pointer group relative bg-neutral-900`}
             >
               <img

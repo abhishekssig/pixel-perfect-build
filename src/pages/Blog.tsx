@@ -189,8 +189,8 @@ const Blog = () => {
         <section className={`px-6 md:px-10 ${activeCategory === "All" && featured && !searchQuery ? "" : "pt-24"}`}>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
             <div>
-              <h2 className="text-2xl md:text-4xl font-light leading-tight">
-                <span className="font-semibold">Blog.</span>{" "}
+              <h2 className="text-2xl md:text-4xl font-light leading-tight font-jp">
+                <span className="font-semibold">ブログ</span>{" "}
                 <span className="text-white/40 italic">News, Insights & Press Releases</span>
               </h2>
             </div>

@@ -32,7 +32,7 @@ const Terms = () => {
       </div>
 
       <div className="pt-24 px-6 md:px-10 max-w-3xl mx-auto pb-20">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-center italic text-white/80 mb-8">Legal</h1>
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-center italic text-white/80 mb-8 font-jp">法的 · Legal</h1>
 
         {/* Tabs */}
         <div className="flex items-center justify-center gap-2 mb-12">

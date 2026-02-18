@@ -83,8 +83,8 @@ const ProductMouse = () => {
       <div className="sticky top-0 h-screen px-6 md:px-10 flex flex-col md:flex-row items-center pt-20 relative z-10">
         {/* Left Content */}
         <div className="flex-1 z-10 pt-10 md:pt-0 flex flex-col justify-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-light leading-tight mb-6">
-            Rebel head Pro click<br />R2
+          <h1 className="font-jp text-4xl md:text-5xl lg:text-6xl font-light leading-tight mb-6">
+            Rebel head Pro click<br />R2 <span className="text-red-500/60 text-2xl">精密鼠</span>
           </h1>
 
           <div
@@ -94,7 +94,7 @@ const ProductMouse = () => {
               transform: showDesc ? "translateY(0)" : "translateY(20px)",
             }}
           >
-            <p className="text-red-500/80 text-xs uppercase tracking-widest mb-3">Product Description</p>
+            <p className="text-red-500/80 text-xs uppercase tracking-widest mb-3">製品説明 · Product Description</p>
             <p className="text-white/70 text-sm md:text-base max-w-sm leading-relaxed">
               A haptic feedback mouse featuring personalized body printing for enhanced tactile response and ergonomic user experience.
             </p>
@@ -107,7 +107,7 @@ const ProductMouse = () => {
               transform: showVariants ? "translateY(0)" : "translateY(20px)",
             }}
           >
-            <p className="text-red-500/80 text-xs uppercase tracking-widest mb-3">Select Variant</p>
+            <p className="text-red-500/80 text-xs uppercase tracking-widest mb-3">バリアント · Select Variant</p>
             <div className="flex gap-3">
               {VARIANTS.map((v) => (
                 <button
@@ -131,7 +131,7 @@ const ProductMouse = () => {
               transform: showPrice ? "translateY(0)" : "translateY(20px)",
             }}
           >
-            <p className="text-red-500/80 text-xs uppercase tracking-widest mb-1">In Stock</p>
+            <p className="text-red-500/80 text-xs uppercase tracking-widest mb-1">在庫あり · In Stock</p>
             <p className="text-2xl md:text-3xl font-light mb-4">INR 3500.93</p>
             <button
               onClick={() => addToCart({ id: 101, name: "Rebel Head Pro Click R2", price: 3500.93, img: mouseHero })}

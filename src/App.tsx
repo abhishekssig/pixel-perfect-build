@@ -11,6 +11,7 @@ import VerifyOTP from "./pages/VerifyOTP";
 import CreateNewPassword from "./pages/CreateNewPassword";
 import Store from "./pages/Store";
 import Discover from "./pages/Discover";
+import Support from "./pages/Support";
 import ProductMouse from "./pages/ProductMouse";
 import NotFound from "./pages/NotFound";
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/create-new-password" element={<CreateNewPassword />} />
           <Route path="/store" element={<Store />} />
           <Route path="/discover" element={<Discover />} />
+          <Route path="/support" element={<Support />} />
           <Route path="/product/mouse" element={<ProductMouse />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

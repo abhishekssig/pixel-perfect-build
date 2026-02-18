@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import {
   LayoutDashboard, ShoppingCart, Users, Package, HeadphonesIcon,
   Shield, Download, BarChart3, LogOut, ChevronLeft, ChevronRight, Menu,
-  FileText, CalendarDays, Tag
+  FileText, CalendarDays, Tag, Layers
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/Frame_5.png";
@@ -20,6 +20,7 @@ const navItems = [
   { label: "Warranty", icon: Shield, path: "/admin/warranty" },
   { label: "Drivers", icon: Download, path: "/admin/drivers" },
   { label: "Analytics", icon: BarChart3, path: "/admin/analytics" },
+  { label: "CMS", icon: Layers, path: "/admin/cms" },
 ];
 
 const AdminLayout = () => {

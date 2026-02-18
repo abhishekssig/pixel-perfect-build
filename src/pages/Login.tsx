@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import katanaImg from "@/assets/katana.png";
 
 const Login = () => {
@@ -27,6 +28,20 @@ const Login = () => {
     if (result.error) {
       setError(result.error);
     } else {
+      // Check if user is admin
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: roleData } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", user.id)
+          .eq("role", "admin")
+          .maybeSingle();
+        if (roleData) {
+          navigate("/admin");
+          return;
+        }
+      }
       navigate("/");
     }
   };

@@ -74,7 +74,7 @@ const Drivers = () => {
       </div>
 
       <div className="pt-24 px-6 md:px-10 max-w-5xl mx-auto pb-20">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-center italic text-white/80 mb-4 font-jp">ドライバー · Driver Downloads</h1>
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-center italic text-white/80 mb-4">Driver Downloads</h1>
         <p className="text-white/40 text-sm text-center mb-14 max-w-xl mx-auto">Download the latest drivers and software for your Rebel products to ensure peak performance and compatibility.</p>
 
         <div className="space-y-10">

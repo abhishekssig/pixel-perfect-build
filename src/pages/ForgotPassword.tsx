@@ -35,7 +35,7 @@ const ForgotPassword = () => {
         </button>
 
         <div className="w-full max-w-md">
-          <h1 className="text-white text-3xl font-light italic mb-10 font-jp">パスワード · Forget Password</h1>
+          <h1 className="text-white text-3xl font-light italic mb-10">Forget Password</h1>
 
           <div>
             <label className="text-white/40 text-xs tracking-wider uppercase block mb-2">Email</label>

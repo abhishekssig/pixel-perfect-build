@@ -14,8 +14,8 @@ const NotFound = () => {
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center text-center px-6">
       {/* Decorative kanji */}
-      <p className="font-jp text-[12rem] md:text-[16rem] font-bold text-white/[0.03] leading-none select-none absolute">
-        迷子
+      <p className="text-[12rem] md:text-[16rem] font-bold text-white/[0.03] leading-none select-none absolute">
+        404
       </p>
 
       <img
@@ -26,8 +26,8 @@ const NotFound = () => {
         style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.4))" }}
       />
 
-      <h1 className="font-jp text-6xl md:text-8xl font-light text-white mb-4">404</h1>
-      <p className="font-jp text-white/40 text-lg md:text-xl mb-2">ページが見つかりません</p>
+      <h1 className="text-6xl md:text-8xl font-light text-white mb-4">404</h1>
+      <p className="text-white/40 text-lg md:text-xl mb-2">Page Not Found</p>
       <p className="text-white/30 text-sm mb-10">The path you seek does not exist.</p>
 
       <div className="flex items-center gap-4">

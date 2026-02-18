@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MenuButton from "@/components/MenuButton";
+import AccountButton from "@/components/AccountButton";
 import keyboardDark from "@/assets/keyboard-dark.png";
 
 const KeyboardSection = () => {
@@ -105,13 +106,7 @@ const KeyboardSection = () => {
           >
             <div />
             <MenuButton />
-            <button
-              onClick={() => navigate("/signup")}
-              className="flex items-center gap-2 px-4 py-2 rounded-full border border-black/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide"
-            >
-              <span className="text-base">👤</span>
-              <span>Account</span>
-            </button>
+            <AccountButton />
           </div>
 
           {/* Bottom text + CTA */}

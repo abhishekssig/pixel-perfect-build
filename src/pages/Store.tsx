@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 import FooterSection from "@/components/FooterSection";
 import logo from "@/assets/Frame_5.png";
 import mouseImg from "@/assets/mouse.png";
+import mouse2Img from "@/assets/mouse-2.png";
 import keyboardImg from "@/assets/keyboard-store.png";
 import gamepadImg from "@/assets/gamepad.png";
 import headphonesImg from "@/assets/headphones.png";
@@ -12,24 +13,34 @@ import chargerImg from "@/assets/charger.png";
 import accessoriesImg from "@/assets/accessories-flatlay.png";
 import numpadImg from "@/assets/numpad.png";
 import webcamImg from "@/assets/webcam.png";
+import keyboardDarkImg from "@/assets/keyboard-dark.png";
 
-const categories = ["New", "Keyboard", "Printed Mouse", "Headphone Stand", "Gamepad"];
+const categories = [
+  { name: "Mouse", img: mouse2Img },
+  { name: "Gamepad", img: gamepadImg },
+  { name: "Keyboard", img: keyboardImg },
+  { name: "Sound Bar", img: speakerImg },
+  { name: "Web Cam", img: webcamImg },
+  { name: "Stream Deck", img: numpadImg },
+  { name: "Charging Deck", img: chargerImg },
+  { name: "Seat Cushion", img: accessoriesImg },
+];
 
 const products = [
-  { id: 1, img: mouseImg, name: "Rebel Head Pro Click R2", price: "INR 3500.93", className: "col-span-1 row-span-1" },
-  { id: 2, img: keyboardImg, name: "Rebel Head Mech K1", price: "INR 5999.00", className: "col-span-1 row-span-2" },
-  { id: 3, img: gamepadImg, name: "Rebel Head Gyro Pad", price: "INR 4299.00", className: "col-span-1 row-span-1" },
-  { id: 4, img: headphonesImg, name: "Rebel Head Audio X", price: "INR 2999.00", className: "col-span-2 row-span-1" },
-  { id: 5, img: speakerImg, name: "Rebel Head Boom S1", price: "INR 1899.00", className: "col-span-1 row-span-1" },
-  { id: 6, img: chargerImg, name: "Rebel Head Power Hub", price: "INR 1499.00", className: "col-span-1 row-span-2" },
-  { id: 7, img: accessoriesImg, name: "Rebel Head Essentials Kit", price: "INR 2499.00", className: "col-span-1 row-span-1" },
-  { id: 8, img: numpadImg, name: "Rebel Head Num Pad N1", price: "INR 1799.00", className: "col-span-2 row-span-1" },
-  { id: 9, img: webcamImg, name: "Rebel Head Cam Pro", price: "INR 3299.00", className: "col-span-1 row-span-1" },
+  { id: 1, img: headphonesImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93", link: "/product/mouse" },
+  { id: 2, img: gamepadImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93" },
+  { id: 3, img: keyboardDarkImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93" },
+  { id: 4, img: headphonesImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93" },
+  { id: 5, img: gamepadImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93" },
+  { id: 6, img: keyboardDarkImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93" },
+  { id: 7, img: mouseImg, name: "Rebel Head Pro\nClick R2", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 3500.93", link: "/product/mouse" },
+  { id: 8, img: speakerImg, name: "Rebel Head Boom S1", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 1899.00" },
+  { id: 9, img: chargerImg, name: "Rebel Head Power Hub", desc: "A haptic feedback mouse featuring personalized body printing", price: "INR 1499.00" },
 ];
 
 const Store = () => {
   const navigate = useNavigate();
-  const [activeCategory, setActiveCategory] = useState("New");
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -42,61 +53,77 @@ const Store = () => {
           onClick={() => navigate("/")}
           style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.4)) drop-shadow(0 0 20px rgba(255,255,255,0.15))" }}
         />
-        <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide">
+        <button className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide">
           <span className="text-base">☰</span>
           <span>MENU</span>
         </button>
         <button
           onClick={() => navigate("/signup")}
-          className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm text-white text-sm tracking-wide"
         >
           <span className="text-base">👤</span>
           <span>Account</span>
         </button>
       </div>
 
-      {/* Header */}
+      {/* Category Icons */}
       <div className="pt-24 px-6 md:px-10">
-        <h1 className="text-3xl md:text-5xl lg:text-6xl font-light leading-tight mb-8">
-          <span className="font-semibold">Store.</span>{" "}
-          <span className="text-white/50 italic">
-            The Best Way To Buy The
-            <br />
-            Product You Love.
-          </span>
-        </h1>
+        <div className="flex items-start justify-between gap-4 overflow-x-auto pb-6 scrollbar-hide">
+          {categories.map((cat) => (
+            <button
+              key={cat.name}
+              onClick={() => setActiveCategory(activeCategory === cat.name ? null : cat.name)}
+              className={`flex flex-col items-center gap-2 min-w-[80px] md:min-w-[100px] group transition-all ${
+                activeCategory === cat.name ? "opacity-100" : "opacity-60 hover:opacity-90"
+              }`}
+            >
+              <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center">
+                <img
+                  src={cat.img}
+                  alt={cat.name}
+                  className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
+                  style={{ filter: "drop-shadow(0 4px 12px rgba(255,255,255,0.08))" }}
+                />
+              </div>
+              <span className="text-xs text-white/60 group-hover:text-white/80 transition-colors whitespace-nowrap">
+                {cat.name}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
 
-        {/* Categories + Search */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
-          <div className="flex items-center gap-6 overflow-x-auto">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`text-sm whitespace-nowrap transition-colors ${
-                  activeCategory === cat
-                    ? "text-white font-medium"
-                    : "text-white/40 hover:text-white/60"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+      {/* Header + Search */}
+      <div className="px-6 md:px-10 mt-4">
+        <div className="flex items-start justify-between gap-8 mb-10">
+          <div>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-white/40 leading-tight tracking-tight">
+              Discover Gear For Gamers
+            </h1>
+            <p className="text-white/30 text-sm mt-2">
+              Razer Mice, Keyboards, Headsets, Laptops & More
+            </p>
           </div>
-          <div className="flex items-center gap-2 ml-4">
+          <div className="flex items-center gap-2 mt-2 shrink-0">
             <div className="relative">
               <input
                 type="text"
                 placeholder=""
-                className="w-32 md:w-48 bg-white/5 border border-white/10 rounded-full py-2 px-4 pr-9 text-sm text-white outline-none focus:border-white/30 transition-colors"
+                className="w-36 md:w-48 bg-white/5 border border-white/10 rounded-full py-2.5 px-4 pr-10 text-sm text-white outline-none focus:border-white/30 transition-colors"
               />
               <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
             </div>
-            <button className="w-9 h-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/40 hover:text-white/60 transition-colors">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5"/></svg>
+            <button className="w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/40 hover:text-white/60 transition-colors">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
             </button>
-            <button className="w-9 h-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/40 hover:text-white/60 transition-colors">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="3" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="1" y="6.5" width="14" height="3" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="1" y="12" width="14" height="3" rx="1" stroke="currentColor" strokeWidth="1.5"/></svg>
+            <button className="w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/40 hover:text-white/60 transition-colors">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="1" y="1" width="14" height="3" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                <rect x="1" y="6.5" width="14" height="3" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                <rect x="1" y="12" width="14" height="3" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+              </svg>
             </button>
           </div>
         </div>
@@ -104,35 +131,47 @@ const Store = () => {
 
       {/* Product Grid */}
       <div className="px-6 md:px-10 pb-16">
-        <div className="grid grid-cols-3 auto-rows-[220px] md:auto-rows-[280px] gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {products.map((product) => (
             <div
               key={product.id}
-              onClick={() => product.id === 1 ? navigate("/product/mouse") : undefined}
-              className={`${product.className} rounded-2xl overflow-hidden cursor-pointer group relative bg-neutral-900`}
+              className="group cursor-pointer"
+              onClick={() => product.link && navigate(product.link)}
             >
-              <img
-                src={product.img}
-                alt={product.name}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                <div>
-                  <p className="text-white text-sm font-medium leading-tight">{product.name}</p>
-                  <p className="text-red-400 text-sm font-semibold mt-1">{product.price}</p>
+              {/* Image Card */}
+              <div className="aspect-[4/5] rounded-xl overflow-hidden bg-neutral-900 border border-white/5 relative">
+                <img
+                  src={product.img}
+                  alt={product.name}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+
+              {/* Info below card */}
+              <div className="mt-4">
+                <h3 className="text-white text-sm font-medium leading-snug whitespace-pre-line">
+                  {product.name}
+                </h3>
+                <p className="text-white/40 text-xs mt-1 leading-relaxed">
+                  {product.desc}
+                </p>
+                <div className="flex items-center justify-between mt-3">
+                  <span className="text-red-500 text-sm font-semibold">{product.price}</span>
+                  <button
+                    className="px-5 py-1.5 rounded-md border border-white/20 text-white text-xs font-medium tracking-wider hover:bg-white/10 transition-colors"
+                    onClick={(e) => { e.stopPropagation(); }}
+                  >
+                    BUY
+                  </button>
                 </div>
-                <button className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-white/20 bg-white/10 backdrop-blur-sm text-white text-xs whitespace-nowrap hover:bg-white/20 transition-colors">
-                  View Product <span className="text-sm">↗</span>
-                </button>
               </div>
             </div>
           ))}
+        </div>
       </div>
 
       {/* Footer */}
       <FooterSection />
-    </div>
     </div>
   );
 };

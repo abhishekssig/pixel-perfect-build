@@ -56,9 +56,9 @@ const footerLinks = [
 const FooterSection = ({ overlap = false }: FooterSectionProps) => {
   const navigate = useNavigate();
   return (
-    <footer className={`relative z-30 ${overlap ? '-mt-[50vh]' : ''}`}>
+    <footer className="relative z-30">
       {/* Gradient fade from transparent to black */}
-      <div className={`h-40 bg-gradient-to-b ${overlap ? 'from-transparent' : 'from-black'} to-black pointer-events-none`} />
+      <div className="h-40 bg-gradient-to-b from-black to-black pointer-events-none" />
 
       {/* Content area with video background */}
       <div className="relative overflow-hidden">

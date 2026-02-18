@@ -3,6 +3,7 @@ import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import MenuButton from "@/components/MenuButton";
 import CartButton from "@/components/CartButton";
 import AccountButton from "@/components/AccountButton";
+import ShopNowButton from "@/components/ShopNowButton";
 import FooterSection from "@/components/FooterSection";
 import logo from "@/assets/Frame_5.png";
 
@@ -52,6 +53,7 @@ const Events = () => {
         <img src={logo} alt="Rebel Head" className="h-10 w-auto cursor-pointer" onClick={() => navigate("/")} style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.4))" }} />
         <MenuButton />
         <div className="flex items-center gap-3">
+          <ShopNowButton />
           <CartButton />
           <AccountButton />
         </div>

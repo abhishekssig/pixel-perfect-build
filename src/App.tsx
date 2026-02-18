@@ -44,8 +44,8 @@ const App = () => (
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/verify-otp" element={<VerifyOTP />} />
               <Route path="/create-new-password" element={<CreateNewPassword />} />
-              <Route path="/store" element={<Store />} />
-              <Route path="/discover" element={<Discover />} />
+              <Route path="/store" element={<Discover />} />
+              <Route path="/discover" element={<Store />} />
               <Route path="/support" element={<Support />} />
               <Route path="/product/mouse" element={<ProductMouse />} />
               <Route path="/product/keyboard" element={<ProductKeyboard />} />

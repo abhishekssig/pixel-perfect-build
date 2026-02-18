@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
+import { supabase } from "@/integrations/supabase/client";
+import { Tag, X } from "lucide-react";
 import FooterSection from "@/components/FooterSection";
 import logo from "@/assets/Frame_5.png";
 
@@ -12,11 +14,124 @@ const Checkout = () => {
   const [step, setStep] = useState<Step>(1);
   const [billingSame, setBillingSame] = useState(true);
 
-  const localTaxes = subtotal * 0.18;
+  // Coupon state
+  const [couponCode, setCouponCode] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount_type: string; discount_value: number } | null>(null);
+  const [couponError, setCouponError] = useState("");
+  const [couponLoading, setCouponLoading] = useState(false);
+
+  const applyCoupon = async () => {
+    if (!couponCode.trim()) return;
+    setCouponLoading(true);
+    setCouponError("");
+    const { data, error } = await supabase
+      .from("coupons")
+      .select("*")
+      .eq("code", couponCode.toUpperCase().trim())
+      .eq("is_active", true)
+      .maybeSingle();
+
+    if (error || !data) {
+      setCouponError("Invalid coupon code");
+      setCouponLoading(false);
+      return;
+    }
+    if (data.expires_at && new Date(data.expires_at) < new Date()) {
+      setCouponError("This coupon has expired");
+      setCouponLoading(false);
+      return;
+    }
+    if (data.max_uses && data.used_count >= data.max_uses) {
+      setCouponError("This coupon has reached its usage limit");
+      setCouponLoading(false);
+      return;
+    }
+    if (data.min_order_amount && subtotal < data.min_order_amount) {
+      setCouponError(`Minimum order amount: ₹${data.min_order_amount}`);
+      setCouponLoading(false);
+      return;
+    }
+    setAppliedCoupon({ code: data.code, discount_type: data.discount_type, discount_value: data.discount_value });
+    setCouponLoading(false);
+  };
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponCode("");
+    setCouponError("");
+  };
+
+  const discount = appliedCoupon
+    ? appliedCoupon.discount_type === "percentage"
+      ? subtotal * (appliedCoupon.discount_value / 100)
+      : appliedCoupon.discount_value
+    : 0;
+
+  const localTaxes = (subtotal - discount) * 0.18;
   const shipping = 50;
-  const total = subtotal + localTaxes + shipping;
+  const total = subtotal - discount + localTaxes + shipping;
 
   const stepLabels = ["Address", "Shipping", "Payment"];
+
+  const CouponInput = () => (
+    <div className="mt-4 pt-4 border-t border-white/10">
+      {appliedCoupon ? (
+        <div className="flex items-center justify-between bg-green-500/10 border border-green-500/20 rounded-lg px-4 py-3">
+          <div className="flex items-center gap-2">
+            <Tag className="w-4 h-4 text-green-400" />
+            <span className="text-green-400 text-sm font-medium">{appliedCoupon.code}</span>
+            <span className="text-green-400/60 text-xs">
+              ({appliedCoupon.discount_type === "percentage" ? `${appliedCoupon.discount_value}% off` : `₹${appliedCoupon.discount_value} off`})
+            </span>
+          </div>
+          <button onClick={removeCoupon} className="text-white/40 hover:text-white transition-colors">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      ) : (
+        <div>
+          <div className="flex gap-2">
+            <input
+              placeholder="Coupon Code"
+              value={couponCode}
+              onChange={(e) => { setCouponCode(e.target.value); setCouponError(""); }}
+              className="flex-1 bg-white/5 border border-white/10 rounded-lg py-2.5 px-4 text-sm text-white outline-none focus:border-white/30 uppercase tracking-wider"
+            />
+            <button
+              onClick={applyCoupon}
+              disabled={couponLoading}
+              className="px-4 py-2.5 rounded-lg border border-white/20 text-white text-xs font-medium hover:bg-white/10 transition-colors disabled:opacity-50"
+            >
+              {couponLoading ? "..." : "Apply"}
+            </button>
+          </div>
+          {couponError && <p className="text-red-400 text-xs mt-2">{couponError}</p>}
+        </div>
+      )}
+    </div>
+  );
+
+  const PriceSummary = ({ title }: { title: string }) => (
+    <div className="rounded-xl border border-white/10 bg-white/5 p-6 h-fit sticky top-24">
+      <h3 className="text-white font-semibold mb-1">{title}</h3>
+      <p className="text-white/40 text-xs mb-4">{items.length} Items</p>
+      <div className="space-y-3 text-sm">
+        <div className="flex justify-between"><span className="text-white/60">Subtotal</span><span>INR {subtotal.toFixed(2)}</span></div>
+        {appliedCoupon && (
+          <div className="flex justify-between text-green-400">
+            <span>Discount ({appliedCoupon.code})</span>
+            <span>- INR {discount.toFixed(2)}</span>
+          </div>
+        )}
+        <div className="flex justify-between"><span className="text-white/60">Local Taxes</span><span>INR {localTaxes.toFixed(2)}</span></div>
+        <div className="flex justify-between"><span className="text-white/60">Shipping Charges</span><span>INR {shipping.toFixed(2)}</span></div>
+        <div className="border-t border-white/10 pt-3 flex justify-between font-semibold text-lg">
+          <span>Total</span><span>INR {total.toFixed(2)}</span>
+        </div>
+      </div>
+      <CouponInput />
+    </div>
+  );
 
   if (items.length === 0) {
     return (
@@ -33,24 +148,12 @@ const Checkout = () => {
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
       <div className="flex items-center justify-between px-6 md:px-10 py-5">
-        <img
-          src={logo}
-          alt="Rebel Head"
-          className="h-10 w-auto cursor-pointer"
-          onClick={() => navigate("/")}
-          style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.4)) drop-shadow(0 0 20px rgba(255,255,255,0.15))" }}
-        />
-        {/* Step Indicators */}
+        <img src={logo} alt="Rebel Head" className="h-10 w-auto cursor-pointer" onClick={() => navigate("/")} style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.4)) drop-shadow(0 0 20px rgba(255,255,255,0.15))" }} />
         <div className="flex items-center gap-2">
           {stepLabels.map((label, i) => (
             <div key={label} className="flex items-center gap-2">
-              <button
-                onClick={() => setStep((i + 1) as Step)}
-                className={`flex items-center gap-1.5 text-sm ${step === i + 1 ? "text-white font-medium" : "text-white/30"}`}
-              >
-                <span className={`w-6 h-6 rounded-full border text-xs flex items-center justify-center ${step === i + 1 ? "border-white" : "border-white/20"}`}>
-                  {i + 1}
-                </span>
+              <button onClick={() => setStep((i + 1) as Step)} className={`flex items-center gap-1.5 text-sm ${step === i + 1 ? "text-white font-medium" : "text-white/30"}`}>
+                <span className={`w-6 h-6 rounded-full border text-xs flex items-center justify-center ${step === i + 1 ? "border-white" : "border-white/20"}`}>{i + 1}</span>
                 {label}
               </button>
               {i < 2 && <span className="text-white/20 mx-1">›</span>}
@@ -61,7 +164,6 @@ const Checkout = () => {
       </div>
 
       <div className="px-6 md:px-10 pb-16">
-        {/* Step 1: Address */}
         {step === 1 && (
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10">
             <div>
@@ -74,7 +176,6 @@ const Checkout = () => {
                   <input placeholder="Contact Number" className="bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-sm text-white outline-none focus:border-white/30" />
                 </div>
               </div>
-
               <h2 className="text-lg font-semibold mb-1">Delivery Address</h2>
               <p className="text-white/40 text-xs mb-6">Please Fill In Your Information Fully In English Characters To Ensure Your Order Gets To You Smoothly.</p>
               <div className="space-y-4 mb-8">
@@ -88,44 +189,23 @@ const Checkout = () => {
                   <input placeholder="Zip Code" className="bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-sm text-white outline-none focus:border-white/30" />
                 </div>
               </div>
-
               <h2 className="text-lg font-semibold mb-1">Billing Address</h2>
               <p className="text-white/40 text-xs mb-4">We'll Only Use This Information To Contact You About Your Billing.</p>
               <label className="flex items-center gap-2 text-sm text-white/70 mb-6 cursor-pointer">
                 <input type="checkbox" checked={billingSame} onChange={() => setBillingSame(!billingSame)} className="accent-red-600" />
                 My Billing Address Is The Same As My Delivery Address
               </label>
-
               <p className="text-white/40 text-xs mb-4">
                 Do You Accept The <span className="text-red-500 underline cursor-pointer">Terms Of Service</span> And <span className="text-red-500 underline cursor-pointer">Privacy Policy</span>?
               </p>
-
-              <button
-                onClick={() => setStep(2)}
-                className="w-full py-3.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm font-medium tracking-wider hover:bg-white/10 transition-colors"
-              >
+              <button onClick={() => setStep(2)} className="w-full py-3.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm font-medium tracking-wider hover:bg-white/10 transition-colors">
                 ACCEPT & CONTINUE
               </button>
             </div>
-
-            {/* Cart Summary */}
-            <div className="rounded-xl border border-white/10 bg-white/5 p-6 h-fit sticky top-24">
-              <h3 className="text-white font-semibold mb-1">Your Cart</h3>
-              <p className="text-white/40 text-xs mb-4">{items.length} Items</p>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between"><span className="text-white/60">Subtotal</span><span>INR {subtotal.toFixed(2)}</span></div>
-                <p className="text-white/30 text-[10px]">Excludes Local Taxes</p>
-                <div className="flex justify-between"><span className="text-white/60">Local Taxes</span><span>INR {localTaxes.toFixed(2)}</span></div>
-                <div className="flex justify-between"><span className="text-white/60">Shipping Charges</span><span>INR {shipping.toFixed(2)}</span></div>
-                <div className="border-t border-white/10 pt-3 flex justify-between font-semibold">
-                  <span>Total</span><span>INR {total.toFixed(2)}</span>
-                </div>
-              </div>
-            </div>
+            <PriceSummary title="Your Cart" />
           </div>
         )}
 
-        {/* Step 2: Shipping */}
         {step === 2 && (
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10">
             <div>
@@ -137,7 +217,6 @@ const Checkout = () => {
                   <button onClick={() => setStep(1)} className="ml-auto px-4 py-1.5 rounded-lg border border-white/20 text-white text-xs hover:bg-white/10 transition-colors">CHANGE</button>
                 </div>
               </div>
-
               <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
               {items.map((item) => (
                 <div key={item.id} className="flex gap-4 mb-6 rounded-xl border border-white/10 bg-white/5 p-4">
@@ -151,31 +230,14 @@ const Checkout = () => {
                   </div>
                 </div>
               ))}
-
-              <button
-                onClick={() => setStep(3)}
-                className="w-full max-w-md py-3.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm font-medium tracking-wider hover:bg-white/10 transition-colors"
-              >
+              <button onClick={() => setStep(3)} className="w-full max-w-md py-3.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm font-medium tracking-wider hover:bg-white/10 transition-colors">
                 CONTINUE
               </button>
             </div>
-
-            <div className="rounded-xl border border-white/10 bg-white/5 p-6 h-fit sticky top-24">
-              <h3 className="text-white font-semibold mb-1">Price Detail</h3>
-              <p className="text-white/40 text-xs mb-4">{items.length} Items</p>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between"><span className="text-white/60">Subtotal</span><span>INR {subtotal.toFixed(2)}</span></div>
-                <div className="flex justify-between"><span className="text-white/60">Local Taxes</span><span>INR {localTaxes.toFixed(2)}</span></div>
-                <div className="flex justify-between"><span className="text-white/60">Shipping Charges</span><span>INR {shipping.toFixed(2)}</span></div>
-                <div className="border-t border-white/10 pt-3 flex justify-between font-semibold text-lg">
-                  <span>Total Payable</span><span>INR {total.toFixed(2)}</span>
-                </div>
-              </div>
-            </div>
+            <PriceSummary title="Price Detail" />
           </div>
         )}
 
-        {/* Step 3: Payment */}
         {step === 3 && (
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10">
             <div className="space-y-4">
@@ -195,27 +257,11 @@ const Checkout = () => {
                   </div>
                 </button>
               ))}
-
-              <button
-                onClick={() => { clearCart(); navigate("/"); }}
-                className="w-full max-w-md py-3.5 mt-4 rounded-lg bg-white/5 border border-white/10 text-white text-sm font-medium tracking-wider hover:bg-white/10 transition-colors"
-              >
+              <button onClick={() => { clearCart(); navigate("/"); }} className="w-full max-w-md py-3.5 mt-4 rounded-lg bg-white/5 border border-white/10 text-white text-sm font-medium tracking-wider hover:bg-white/10 transition-colors">
                 Pay INR {total.toFixed(2)}
               </button>
             </div>
-
-            <div className="rounded-xl border border-white/10 bg-white/5 p-6 h-fit sticky top-24">
-              <h3 className="text-white font-semibold mb-1">Price Detail</h3>
-              <p className="text-white/40 text-xs mb-4">{items.length} Items</p>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between"><span className="text-white/60">Subtotal</span><span>INR {subtotal.toFixed(2)}</span></div>
-                <div className="flex justify-between"><span className="text-white/60">Local Taxes</span><span>INR {localTaxes.toFixed(2)}</span></div>
-                <div className="flex justify-between"><span className="text-white/60">Shipping Charges</span><span>INR {shipping.toFixed(2)}</span></div>
-                <div className="border-t border-white/10 pt-3">
-                  <div className="flex justify-between font-semibold text-lg"><span>Total Payable</span><span>INR {total.toFixed(2)}</span></div>
-                </div>
-              </div>
-            </div>
+            <PriceSummary title="Price Detail" />
           </div>
         )}
       </div>

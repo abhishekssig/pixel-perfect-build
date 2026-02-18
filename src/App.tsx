@@ -40,6 +40,7 @@ import AdminDrivers from "./pages/admin/AdminDrivers";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
 import AdminBlogs from "./pages/admin/AdminBlogs";
 import AdminEvents from "./pages/admin/AdminEvents";
+import AdminCoupons from "./pages/admin/AdminCoupons";
 import PageTracker from "./components/PageTracker";
 
 const queryClient = new QueryClient();
@@ -81,6 +82,7 @@ const App = () => (
                 <Route path="orders" element={<AdminOrders />} />
                 <Route path="users" element={<AdminUsers />} />
                 <Route path="products" element={<AdminProducts />} />
+                <Route path="coupons" element={<AdminCoupons />} />
                 <Route path="blogs" element={<AdminBlogs />} />
                 <Route path="events" element={<AdminEvents />} />
                 <Route path="support" element={<AdminSupport />} />
